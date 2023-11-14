@@ -153,3 +153,157 @@ exec sp_Criar_Usuario_Dependente
 @dt_nascimento = '1987-05-04',
 @senha = '123'
 
+
+
+
+
+-- deletar usuário juridico dono pelo email do usuário
+alter procedure sp_Deletar_Usuario_Dono
+@email varchar(1000)
+
+as 
+begin 
+
+-- verificar se existe o usuário
+if (select count(id_usuario) from Usuarios_Donos
+	where email = @email) = 0
+begin
+	PRINT 'Usuário não existe'
+	return
+end
+
+--deletar o usuário pelo email
+
+delete from Usuarios_Donos
+where email = @email
+
+PRINT 'Usuário deletado'
+
+end 
+go
+
+
+exec sp_Deletar_Usuario_Dono
+@email = 'marcelo@oesia.com'
+
+
+-- SP Para mostrar  a partir do email
+-- INFOS Nome, Email, Senha, Empresa, Ramo
+
+alter procedure sp_Mostrar_Usuario_Dono
+@email varchar(1000)
+
+as 
+begin 
+
+-- verificar se existe o usuário
+if (select count(id_usuario) from Usuarios_Donos
+	where email = @email) = 0
+begin
+	PRINT 'Usuário não existe'
+	return
+end
+
+select Usuarios_Donos.nome, Usuarios_Donos.email, Usuarios_Donos.senha, Empresas.nome,  Tipo_Empresa.tipo from Usuarios_Donos
+left join Empresas on Usuarios_Donos.id_empresa = Empresas.id_empresa
+left join Tipo_Empresa on Empresas.id_tipo_empresa = Tipo_Empresa.id_tipo_empresa
+where Usuarios_Donos.email = @email
+
+
+end 
+go
+
+exec sp_Mostrar_Usuario_Dono
+@email = 'marcelo@l.com'
+
+
+
+
+
+-- SP Para mostrar as informações do plano      Nome do plano e limites
+create procedure sp_Mostrar_Plano
+@email varchar(1000)
+
+as begin
+
+-- verificar se existe o usuário
+if (select count(id_usuario) from Usuarios_Donos
+	where email = @email) = 0
+begin
+	PRINT 'Usuário não existe'
+	return
+end
+
+select Tipo_Plano.tipo, Tipo_Plano.limite_solicitacao_mensal, Tipo_Plano.limite_usuarios, Tipo_Plano.custo_mensal
+from Usuarios_Donos
+left join Empresas on Usuarios_Donos.id_empresa = Empresas.id_empresa
+left join Tipo_Plano on Empresas.id_tipo_plano = Tipo_Plano.id_tipo_plano
+where email = @email
+
+end 
+go
+
+
+
+exec sp_Mostrar_Plano
+@email = 'marcelo@l.com'
+
+
+
+
+
+-- SP Alterar Cadastro Usuário  Nome, Email, Senha, Empresa, Ramo
+alter procedure sp_Alterar_Usuario_Dono
+@email varchar(1000),
+@email_novo varchar(1000),
+@nome_usuario varchar(1000),
+@senha varchar(1000),
+@nome_empresa varchar(1000),
+@ramo_empresa varchar(1000)
+
+as
+begin
+
+-- verificar se existe o usuário
+if (select count(id_usuario) from Usuarios_Donos
+	where email = @email) = 0
+begin
+	PRINT 'Usuário não existe'
+	return
+end
+
+UPDATE Usuarios_Donos
+SET nome = @nome_usuario,
+    email = @email_novo,
+    senha = @senha
+where email = @email
+
+UPDATE Empresas
+SET Empresas.nome = @nome_empresa
+from Empresas
+left join Usuarios_Donos ON Usuarios_Donos.id_empresa = Empresas.id_empresa
+where Usuarios_Donos.email = 'amorim@lm.com'
+
+UPDATE Tipo_Empresa
+SET Tipo_Empresa.tipo = @ramo_empresa
+from Tipo_Empresa
+left join Empresas ON Empresas.id_tipo_empresa = Tipo_Empresa.id_tipo_empresa
+left join Usuarios_Donos ON Usuarios_Donos.id_empresa = Empresas.id_empresa
+where Usuarios_Donos.email = 'amorim@lm.com'
+
+PRINT 'Alterações do usuário realizadas com sucesso'
+
+end 
+go
+
+select * from Usuarios_Donos
+left join Empresas on Usuarios_Donos.id_empresa = Empresas.id_empresa
+left join Tipo_Empresa on Empresas.id_tipo_empresa = Tipo_Empresa.id_tipo_empresa
+
+exec sp_Alterar_Usuario_Dono
+@email = 'amorim@lm.com',
+@email_novo = 'nelso@lm.com',
+@nome_usuario = 'Nelso Fisico',
+@senha = '789',
+@nome_empresa = 'nelso copany',
+@ramo_empresa = 'varejo'
