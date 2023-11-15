@@ -157,7 +157,7 @@ exec sp_Criar_Usuario_Dependente
 
 
 
--- deletar usuário juridico dono pelo email do usuário
+-- SP deletar usuário juridico dono pelo email do usuário
 alter procedure sp_Deletar_Usuario_Dono
 @email varchar(1000)
 
@@ -172,10 +172,16 @@ begin
 	return
 end
 
---deletar o usuário pelo email
+declare @id_empresa int;
+select @id_empresa = Usuarios_Donos.id_empresa from Usuarios_Donos where email = @email;
 
+--deletar o usuário pelo email
 delete from Usuarios_Donos
 where email = @email
+
+--deletar empresa desse usuário
+delete from Empresas
+where id_empresa = @id_empresa
 
 PRINT 'Usuário deletado'
 
@@ -204,7 +210,7 @@ begin
 	return
 end
 
-select Usuarios_Donos.nome, Usuarios_Donos.email, Usuarios_Donos.senha, Empresas.nome,  Tipo_Empresa.tipo from Usuarios_Donos
+select Usuarios_Donos.nome, Usuarios_Donos.email, Usuarios_Donos.senha, Empresas.nome as "empresa",  Tipo_Empresa.tipo from Usuarios_Donos
 left join Empresas on Usuarios_Donos.id_empresa = Empresas.id_empresa
 left join Tipo_Empresa on Empresas.id_tipo_empresa = Tipo_Empresa.id_tipo_empresa
 where Usuarios_Donos.email = @email
