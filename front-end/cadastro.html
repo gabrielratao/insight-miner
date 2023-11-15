@@ -23,12 +23,18 @@
             <h2>Vamos criar sua conta</h2>
             <form action="">
                 <input type="text" id="nome" placeholder="Nome completo">
-                <input type="email" id="email-corporativo" placeholder="Email corporativo">
-                <input type="password" id="password" placeholder="Senha">
-                <input type="text" id="nome-empresa" placeholder="Nome da empresa">
-                <input type="text" id="ramo-empresa" placeholder="Qual o ramo da empresa?">
-                <input type="text" id="nome" placeholder="Nome completo">
-                <input type="text" id="tel" placeholder="Número de telefone">
+                <input type="date" id="dt_Nascimento">
+                <input type="email" id="email" placeholder="Email">
+                <input type="password" id="senha" placeholder="Senha">
+                <input type="text" id="nome_empresa" placeholder="Nome da empresa">
+                <!--<input type="text" id="ramo-empresa" placeholder="Qual o ramo da empresa?">-->
+                <select class="form-select" name="tipo_empresa" id="tipo_empresa">
+                    <option selected>Escolha o ramo da sua empresa</option>
+                    <option value="marketing">Marketing</option>
+                    <option value="orgão público">Orgão público</option>
+                    <option value="engenharia">Engenharia</option>
+                    <option value="tecnologia">Tecnologia</option>
+                </select>
             </form>
 
             <button type="button" id="cad-user" class="btn">Cadastrar</button>
