@@ -1,7 +1,5 @@
 
-
 -- SP CRIAÇÃO DE USUÁRIO JURÍDICO DONO
-
 alter procedure sp_Criar_Juridico_Dono
 @nome varchar(1000),
 @email varchar(1000),
@@ -28,6 +26,8 @@ where tipo = @tipo_empresa;
 
 if @idade < 18 
 begin
+
+	RAISERROR('Usuário menor de idade', 16, 1)
 	PRINT 'Para criar conta, o usuário deve ter acima de 18 anos de idade'
 	return 
 end
@@ -40,6 +40,7 @@ end
 if (select count(id_empresa) from Empresas
 	where nome = @nome_empresa) = 1
 begin 
+	RAISERROR('Já há um dono para essa empresa', 16, 1)
 	PRINT 'JÁ HÁ UM DONO PARA ESSA EMPRESA'
 	return
 end
@@ -65,7 +66,6 @@ go
 
 
 --   TESTANDO SP CRIAÇÃO USUARIO DONO    --
-
 exec sp_Criar_Juridico_Dono
 @nome = 'Magda Ratao',
 @email = 'marcelo@poesia.com',
@@ -91,6 +91,7 @@ set @idade = DATEDIFF(YEAR, @dt_nascimento, GETDATE());
 
 if @idade < 18
 begin
+	RAISERROR('Usuário menor de idade', 16, 1)
 	PRINT 'Para criar conta, o usuário deve ter acima de 18 anos de idade'
 	return 
 end
@@ -99,6 +100,7 @@ end
 if (select count(id_usuario) from Usuarios_Dependentes
 	where email = @email) = 1
 begin
+	RAISERROR('Usuário já cadastrado no sistema', 16, 1)
 	PRINT 'Usuário já cadastrado no sistema'
 	return
 end
@@ -111,6 +113,7 @@ if (select count(Empresas.id_empresa) from Usuarios_Donos
 left join Empresas on Usuarios_Donos.id_empresa = Empresas.id_empresa
 where substring(Usuarios_Donos.email, CHARINDEX('@', Usuarios_Donos.email) + 1, len(Usuarios_Donos.email)) = @dominio) = 0
 begin
+	RAISERROR('Não há nenhuma empresa cadastrada nesse dominio', 16, 1)
 	PRINT 'Não há nenhuma empresa cadastrada nesse dominio'
 	return
 end
@@ -129,6 +132,7 @@ if (select count(Usuarios_Dependentes.id_usuario) from Usuarios_Dependentes
 	left join Tipo_Plano on Empresas.id_tipo_plano = Tipo_Plano.id_tipo_plano
 	where substring(Usuarios_Donos.email, CHARINDEX('@', Usuarios_Donos.email) + 1, len(Usuarios_Donos.email)) = @dominio) >= @limite_usuarios
 begin
+	RAISERROR('Não será possível criar um novo usuário pois a empresa já está com o número maximo de usuários disponíveis.', 16, 1)
 	PRINT 'Não será possível criar um novo usuário pois a empresa já está com o número maximo de usuários disponíveis.'
 	return
 end
@@ -168,6 +172,7 @@ begin
 if (select count(id_usuario) from Usuarios_Donos
 	where email = @email) = 0
 begin
+	RAISERROR('Usuário não existe', 16, 1)
 	PRINT 'Usuário não existe'
 	return
 end
@@ -195,7 +200,6 @@ exec sp_Deletar_Usuario_Dono
 
 -- SP Para mostrar  a partir do email
 -- INFOS Nome, Email, Senha, Empresa, Ramo
-
 alter procedure sp_Mostrar_Usuario_Dono
 @email varchar(1000)
 
@@ -206,6 +210,7 @@ begin
 if (select count(id_usuario) from Usuarios_Donos
 	where email = @email) = 0
 begin
+	RAISERROR('Usuário não existe', 16, 1)
 	PRINT 'Usuário não existe'
 	return
 end
@@ -227,7 +232,7 @@ exec sp_Mostrar_Usuario_Dono
 
 
 -- SP Para mostrar as informações do plano      Nome do plano e limites
-create procedure sp_Mostrar_Plano
+alter procedure sp_Mostrar_Plano
 @email varchar(1000)
 
 as begin
@@ -236,6 +241,7 @@ as begin
 if (select count(id_usuario) from Usuarios_Donos
 	where email = @email) = 0
 begin
+	RAISERROR('Usuário não existe', 16, 1)
 	PRINT 'Usuário não existe'
 	return
 end
@@ -274,6 +280,7 @@ begin
 if (select count(id_usuario) from Usuarios_Donos
 	where email = @email) = 0
 begin
+	RAISERROR('Usuário não existe', 16, 1)
 	PRINT 'Usuário não existe'
 	return
 end
