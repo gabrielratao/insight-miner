@@ -20,15 +20,24 @@
 <body>
     <main>
         <section class="card">
-            <h2>Vamos criar sua conta</h2>
-            <form action="">
-                <input type="text" id="nome" placeholder="Nome completo">
-                <input type="date" id="dt_Nascimento">
-                <input type="email" id="email" placeholder="Email">
-                <input type="password" id="senha" placeholder="Senha">
-                <input type="text" id="nome_empresa" placeholder="Nome da empresa">
+            <h3>Primeiro escolha o tipo de conta que vc gostaria de Cadastrar</h3>
+
+            <div id="tipo_conta">
+                <button type="button" id="conta_juridica" class="btn" value="conta_juridica">Conta juridica</button>
+                <button type="button" id="conta_dependente" class="btn" value="conta_dependente">Conta dependente</button>
+            </div>
+
+
+            
+            <form id="juridico" style="display: none;">
+                <h5>para contas juridicas:</h5>
+                <input type="text" id="jud-nome" placeholder="Nome completo">
+                <input type="date" id="-jud-dt-Nascimento">
+                <input type="email" id="jud-email" placeholder="Email">
+                <input type="password" id="jud-senha" placeholder="Senha">
+                <input type="text" id="nome-empresa" placeholder="Nome da empresa">
                 <!--<input type="text" id="ramo-empresa" placeholder="Qual o ramo da empresa?">-->
-                <select class="form-select" name="tipo_empresa" id="tipo_empresa">
+                <select name="tipo_empresa" id="tipo-empresa">
                     <option selected>Escolha o ramo da sua empresa</option>
                     <option value="marketing">Marketing</option>
                     <option value="orgão público">Orgão público</option>
@@ -37,8 +46,16 @@
                 </select>
             </form>
 
-            <button type="button" id="cad-user" class="btn">Cadastrar</button>
+            <form id="juridico_dependente" style="display: none;">
+                <h5>Para contas dependentes:</h5>
+                <input type="text" id="nome" placeholder="Nome completo">
+                <input type="date" id="dt_Nascimento">
+                <input type="email" id="email" placeholder="Email">
+                <input type="password" id="senha" placeholder="Senha">
+            </form>
+
+            <button type="button" id="cad-user" class="btn" style="display: none;">Cadastrar</button>
         </section>
-    </main>    
+    </main>   
 </body>
 </html>
