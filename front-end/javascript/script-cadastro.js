@@ -48,9 +48,6 @@ document.addEventListener("DOMContentLoaded", function() {
             // Se o formulário dependente estiver visível, cadastrar um usuário dependente
             cadastrarUsuarioDependente();
         } else {
-            // Lógica adicional, se necessário
-            console.log("Nenhum formulário está visível");
-        }
     }
 
     // Função para cadastrar um novo usuário jurídico
