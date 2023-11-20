@@ -73,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function() {
             tipo_empresa: tipoEmpresa
         };
 
-        // Fazer a requisição à API (substitua 'sua_api_aqui' pela URL real da sua API)
+        // Fazer a requisição à API
         fetch('http://localhost:3000/users', {
             method: 'POST',
             headers: {
