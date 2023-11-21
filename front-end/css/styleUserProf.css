@@ -41,6 +41,12 @@ body{
 
 h5 {
     font-family: 'Roboto mono', monospace;
+    text-align: center;
+}
+
+h6 {
+    border: #284B63;
+    padding: 5px;
 }
 
 ul {
@@ -51,6 +57,10 @@ ul {
 
 li {
     list-style: none;
+}
+
+p {
+    text-align: center;
 }
 
 

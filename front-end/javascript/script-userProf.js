@@ -1,7 +1,7 @@
 // Mostrar dados do usuario
-document.addEventListener("DOMContentLoaded", function() {
-    // Fazer uma solicitação GET à API (substitua 'sua_api_aqui' pela URL real da sua API)
-    fetch('http://localhost:3000/sua_api_aqui')
+/*document.addEventListener("DOMContentLoaded", function() {
+    // Fazer uma solicitação GET à API
+    fetch('http://localhost:3000/')
         .then(response => response.json())
         .then(data => {
             // Lidar com os dados da API e preencher a lista
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function() {
             userDetailsList.appendChild(mensagemSemDados);
         }
     }
-});
+}); */
 // Alterar dados do usuario
 
 
@@ -41,5 +41,26 @@ document.addEventListener("DOMContentLoaded", function() {
 // Deletar usuario
 
 
+//Mostrar plano do usuario
+
 
 //Ir para pagina de planos
+function redirecionarPlanos() {
+    // variavel com a url da pagina
+    var plan = "planos.html";
+    
+    // Redirecionamento para pagina cadastro
+    window.location.href = plan;
+}
+
+// Configurando evento do botão
+function eventoPlanos() {
+    // Obtendo o elemento do botão pelo ID
+    var btnPlan = document.getElementById("btn-plano");
+
+    // Adicionando o evento de clique ao botão
+    btnPlan.addEventListener("click", redirecionarPlanos);
+}
+
+// Chamando a função para configurar o evento ao carregar a página
+window.onload = eventoPlanos;

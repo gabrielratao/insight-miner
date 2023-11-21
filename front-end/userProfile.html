@@ -9,7 +9,7 @@
     <!--Using CSS-->
     <link rel="stylesheet" href="css/styleUserProf.css">
     <!--Using JavaScript-->
-    <script src="javascript/script-cadastro.js"></script>
+    <script src="javascript/script-userProf.js"></script>
     <!--using google fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,13 +23,30 @@
             <div id="Dados-Usuario">
                 <h5>Sua conta</h5>
 
-                <ul id="user-details">
-                    <li>Nome:</li>
+                <!--Tabela se for usar-->
+                <!--
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Usuario</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                -->
+                <!--<ul id="user-details">
+                    <label for="nome">Nome:</label>
+                    <li id="nome" contenteditable="true">Julio</li>
+                    <label for="email">Email:</label>
+                    <li id="email" contenteditable="true">julio@empresa.com</li>
                     <li>Email:</li>
                     <li>Senha:</li>
                     <li>Empresa:</li>
                     <li>Ramos:</li>
-                </ul>
+                </ul>-->
+
+                <h6 contenteditable="true">Julio Julinho Julão</h6>
 
                 <button type="button" id="plano" class="btn">Alterar dados</button>
                 <button type="button" id="plano" class="btn">Deletar conta</button>
@@ -39,6 +56,18 @@
             <div id="Plano">
                 <h5>Seu Plano</h5>
                 <div id="flexbox">
+                    <!--Tabela showplanos-->
+                    <!--
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Usuario</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    -->
                     <p>
                         Todo usuário por padrão
                         começa com o plano inicial
@@ -51,7 +80,7 @@
                 
                 </div>
 
-                <button type="button" id="plano" class="btn">Ver Planos</button>
+                <button type="button" id="btn-plano" class="btn">Ver Planos</button>
             </div>
         </section>
     </main>
