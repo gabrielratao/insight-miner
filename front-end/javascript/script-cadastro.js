@@ -49,7 +49,8 @@ document.addEventListener("DOMContentLoaded", function() {
             cadastrarUsuarioDependente();
         } else {
     }
-
+    }
+    
     // Função para cadastrar um novo usuário jurídico
     function cadastrarUsuarioJuridico() {
         // Obter os valores dos campos do formulário jurídico
