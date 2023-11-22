@@ -46,10 +46,47 @@
                     <li>Ramos:</li>
                 </ul>-->
 
-                <h6 contenteditable="true">Julio Julinho Julão</h6>
+                <!-- <h6 contenteditable="true">Julio Julinho Julão</h6> -->
 
-                <button type="button" id="plano" class="btn">Alterar dados</button>
-                <button type="button" id="plano" class="btn">Deletar conta</button>
+                <!-- <p id="email">email teste</p> -->
+
+                <label for="jud-email">Email:</label>
+                <input type="email" id="jud-email" name="jud-email" placeholder="Email">
+
+
+                <form id="profileForm" style="display: none;">
+                    <label for="jud-nome">Nome completo:</label>
+                    <input type="text" id="jud-nome" name="jud-nome" placeholder="Nome completo" readonly>
+
+                    <label for="-jud-dt-Nascimento">Data de Nascimento:</label>
+                    <input type="date" id="-jud-dt-Nascimento" name="-jud-dt-Nascimento" readonly>
+                    <br>  
+
+                    <label for="jud-email">Email:</label>
+                    <input type="email" id="jud-email" name="jud-email" placeholder="Email" readonly>
+                    <br>
+
+                    <label for="jud-senha">Senha:</label>
+                    <input type="password" id="jud-senha" name="jud-senha" placeholder="Senha" readonly>
+                    <br>
+
+                    <label for="nome-empresa">Nome da empresa:</label>
+                    <input type="text" id="nome-empresa" name="nome-empresa" placeholder="Nome da empresa" readonly>
+
+                    <label for="tipo-empresa">Tipo de empresa:</label>
+                    <input type="text" id="nome-empresa" name="nome-empresa" placeholder="Nome da empresa" readonly>
+
+                </form>
+
+                <!-- <input type="text" name="email" id="email" value="">
+                <input type="text" name="" id="" readonly> -->
+                
+                <button type="button" id="mostrar-dado" class="btn">Mostrar dados</button>
+                <div style="display: none;">
+                    <button type="button" id="alterar-dado" class="btn">Alterar dados</button>
+                    <button type="button" id="deletar-dado" class="btn">Deletar conta</button>
+                </div>
+         
 
             </div>
 

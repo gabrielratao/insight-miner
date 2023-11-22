@@ -34,6 +34,26 @@
         }
     }
 }); */
+
+// Mostrar dados do usuário
+
+function readUser(){
+    
+}
+
+// function readUser(){
+//     var email = document.getElementById('email')
+//     var texto = email.value
+//     console.log(texto)
+    
+// }
+
+// document.addEventListener('DOMContentLoaded', readUser)
+
+
+
+
+
 // Alterar dados do usuario
 
 

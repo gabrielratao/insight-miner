@@ -37,4 +37,35 @@ function eventoCadastro() {
 // Chamando a função para configurar o evento ao carregar a página
 window.onload = eventoCadastro;
 
+//Autenticação de usuário para login na plataforma
 
+
+async function logIn(){
+    var login = document.getElementById('email-login').value
+    var senha = document.getElementById('password-login').value
+
+    const response = await fetch(`http://localhost:3000/users/autenticate/${login}/${senha}`, {
+        method: "GET",
+        dataType: "json"
+    });
+    
+    const result = await response.json()
+    // console.log(result)
+    if (result === 'Acesso negado'){
+        console.log('Acesso negado')
+        alert('Acesso negado. Credenciais incorretas')
+    }
+
+    else if (result === 'Usuário não existe'){
+        alert('Usuário não existe')
+    }
+    else{
+        if (result.rowsAffected[0] === 1){
+            console.log('Acesso permitido')
+            window.location.href = ('./userProfile.html')
+        }
+    }
+
+
+       
+}

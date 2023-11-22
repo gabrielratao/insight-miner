@@ -36,7 +36,7 @@ function execSQLQuery(sqlQry, res){
 				.then(result => {
 
                     console.log(result)
-                    res.json(result.recordset)
+                    res.json(result)
                 })
 				.catch(err => {
                     console.log(err.message)
@@ -76,6 +76,17 @@ app.get('/users/:email', (req, res) =>{
     const email = req.params.email
     execSQLQuery(`exec sp_Mostrar_Usuario_Dono @email = '${email}' `, res)
 
+})
+
+
+//autenticação do usuário
+app.get('/users/autenticate/:email/:senha', (req, res) =>{
+    const email = req.params.email
+    const senha_enviada = req.params.senha
+
+    execSQLQuery(`exec sp_Autenticar_Usuario_Dono
+                @email = '${email}',
+                @senha_enviada = '${senha_enviada}'`, res)
 })
 
 
