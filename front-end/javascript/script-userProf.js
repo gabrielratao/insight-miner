@@ -47,8 +47,10 @@ async function readUser(){
 
     const result = await response.json()
 
-    // if (result === '')
-    console.log(result.recordset)
+    if (result === 'Usuário não existe'){
+        alert('Usuário não existe')
+    }
+    console.log(result)
 }
 
 // function readUser(){
