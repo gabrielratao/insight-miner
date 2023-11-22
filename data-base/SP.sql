@@ -264,7 +264,7 @@ exec sp_Mostrar_Plano
 
 
 
--- SP Alterar Cadastro Usuário  Nome, Email, Senha, Empresa, Ramo
+-- SP Alterar Cadastro Usuário Dono   Nome, Email, Senha, Empresa, Ramo
 alter procedure sp_Alterar_Usuario_Dono
 @email varchar(1000),
 @email_novo varchar(1000),
@@ -272,6 +272,7 @@ alter procedure sp_Alterar_Usuario_Dono
 @senha varchar(1000),
 @nome_empresa varchar(1000),
 @ramo_empresa varchar(1000)
+
 
 as
 begin
@@ -305,6 +306,7 @@ left join Usuarios_Donos ON Usuarios_Donos.id_empresa = Empresas.id_empresa
 where Usuarios_Donos.email = 'amorim@lm.com'
 
 PRINT 'Alterações do usuário realizadas com sucesso'
+
 
 end 
 go
