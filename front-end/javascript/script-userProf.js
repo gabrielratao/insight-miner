@@ -50,7 +50,10 @@ async function readUser(){
     if (result === 'Usuário não existe'){
         alert('Usuário não existe')
     }
-    console.log(result)
+    else{
+        console.log(result.recordset[0].tipo)
+    }
+    // console.log(result)
 }
 
 // function readUser(){
