@@ -2,6 +2,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    color: #EEF0EB;
 }
 
 body{
@@ -12,7 +14,7 @@ body{
     height: 100vh;
 }
 
-.card {
+/*.card {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -32,7 +34,6 @@ body{
 }
 
 .card .content {
-    width: 50%;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -54,30 +55,75 @@ body{
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     margin-bottom: 30px;
+}*/
+
+.card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    place-items: center;
+    padding: 50px;
+    margin: 100px;
+    width: 62.5rem;
+    height: 37.5rem;
+    background-color: #EEF0EB;
+    box-shadow: 0px 6px 25px 2px rgba(34, 34, 34, 0.50);
+    border-radius: 50px;
+}
+
+content {
+    border: 0px solid red;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    place-items: center;
+}
+
+.card article {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.card h1 {
+    border: 0px solid red;
+    font-family: 'Roboto mono', monospace;
+    font-size: 60px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #153243;
+}
+
+.card h5 {
+    border: 0px solid red;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    margin-bottom: 30px;
+    color: #001F30;
 }
 
 .card input {
     /*layout*/
     margin: 10px;
-    padding: 5px;
-    width: 400px;
+    padding: 15px;
+    width: 430px;
     height: 40px;
     /*style*/
+    color: #153243;
     border-radius: 5px;
     border: 1px solid #153243;
     background: #EEF0EB;
     box-shadow: 5px 5px 10px 2px rgba(51, 51, 51, 0.20) inset;
 }
 
-.card .btn {
+#coisa {
+    border: 0px solid blue;
+}
+
+.btn {
     /*layout*/
     margin: 35px;
-    display: inline-flex;
+    display: inline-block;
     padding: 9px 45px;
-    /*justify-content: center;
-    align-items: center;*/
-    /*gap: 10px;*/
-    /*style btn*/
     border-radius: 5px;
     background: #255875;
     color: #fff;
@@ -85,7 +131,6 @@ body{
 
 .btn:hover {
     background-color: #0C2A3B;
-    /*box-shadow: 0 10px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-    */
     box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
+

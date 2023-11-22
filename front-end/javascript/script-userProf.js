@@ -56,14 +56,51 @@ function readUser(){
 
 // Alterar dados do usuario
 
+const { text } = require("body-parser");
 
 
+//---------------------------------------------------------------
 // Deletar usuario
+document.addEventListener("DOMContentLoaded", function () {
+
+    const btnCall = document.getElementById("DelDados");
+    
+    btnCall.addEventListener('click', function() {
+        
+
+        let senhaConfirm = prompt ("Digite sua senha para confirmar");
+        if (senhaConfirm == "senha correta") {
+            //Aqui entra a logica do delete que foi feito no back-en
+
+            //redireciona para a pagina de despedida
+            window.location.href = "despedida.html";
+        } else {
+            alert("Senha incorrenta. Por favor, tente novamente.")
+        }
+    })
 
 
+})
+
+/*function deletConfirm () {
+    let alert;
+    let senha = prompt ("Porfavor digite sua senha para confirmar");
+    if (senha == null || senha == "") {
+        alert = "Senha incorreta por favor digite novamente";
+    } else {
+        alert = "Seus dados foram deletados com sucesso";
+    }
+
+    document.getElementById("demo").innerHTML = alert;
+}*/
+
+
+//---------------------------------------------------------------
 //Mostrar plano do usuario
 
 
+
+//---------------------------------------------------------------
 //Ir para pagina de planos
 function redirecionarPlanos() {
     // variavel com a url da pagina
