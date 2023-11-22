@@ -1,18 +1,21 @@
 const express = require('express');
 const sql = require('mssql');
 const bodyParser = require('body-parser');
+const cors = require('cors')
 
-const app = express();         
+
+const app = express();    
+app.use(cors())     
 const port = 3000; //porta padrão
 app.use(express.json())
 
 const config = {
     server: 'localhost',
     database: 'insightminer',
-    port:1433,
+    port: 1433,
     user: "sa",
     password: '123456',
-    trustServerCertificate:true,
+    trustServerCertificate: true,
     options: {
         cryptoCredentialsDetails: {
             minVersion: 'TLSv1',
@@ -32,25 +35,45 @@ function execSQLQuery(sqlQry, res){
 				.query(sqlQry)
 				.then(result => {
 
-                    // console.log(result.recordset)
+                    console.log(result)
                     res.json(result.recordset)
                 })
 				.catch(err => {
-                    console.log(err)
-                    res.json(err)
+                    console.log(err.message)
+                    res.json(err.message)
                 });
 }
 
 //Read all users
 app.get('/users', (req, res) => {
-    execSQLQuery(`select * from Usuarios_Donos `, res)
+    try{
+        execSQLQuery(`select * from Usuarios_Donos`, res)
+    }   
+    catch (error) {
+        console.error('Erro no endpoint /users:', error.message);
+    }
+    
+})
+
+
+//raad all users dependentes
+app.get('/users_dep/:email', (req, res) =>{
+    try {
+        const email = req.params.email
+        execSQLQuery(`exec sp_Mostrar_Geral @email = '${email}' `, res)
+    }
+	catch (error){
+
+    }
+    
+
 })
 
 
 //Read users by email
 app.get('/users/:email', (req, res) =>{
 
-	const email = req.params.email
+    const email = req.params.email
     execSQLQuery(`exec sp_Mostrar_Usuario_Dono @email = '${email}' `, res)
 
 })
@@ -71,8 +94,7 @@ app.post('/users', (req, res) => {
                 @dt_nascimento = '${dt_nascimento}',
                 @senha = '${senha}',
                 @nome_empresa = '${nome_empresa}',
-                @tipo_empresa = '${tipo_empresa}'
-                `, res)
+                @tipo_empresa = '${tipo_empresa}'`, res)
 })
 
 
@@ -104,6 +126,7 @@ app.put('/users', (req, res) => {
                 @nome_empresa = '${nome_empresa}',
                 @ramo_empresa = '${ramo_empresa}'
                 `, res)
+
 
 })
 

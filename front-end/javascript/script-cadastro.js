@@ -70,14 +70,26 @@ document.addEventListener("DOMContentLoaded", function() {
             nome_empresa: nomeEmpresa,
             tipo_empresa: tipoEmpresa
         };
+        console.log(dadosJuridicos)
+        // var dadosJuridicos = {
+        //     email: 'bosta@bosta.com',
+        //     nome: 'Bosta',
+        //     dt_nascimento: '2010/05/10',
+        //     senha: 'senha',
+        //     nome_empresa: 'Defeco @ Bosta',
+        //     tipo_empresa:  'varejo'
+        // };
 
         // Fazer a requisição à API
+        console.log('teste')
         fetch('http://localhost:3000/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
+            // body: JSON.stringify(dadosJuridicos),
             body: JSON.stringify(dadosJuridicos),
+            dataType: "json"
         })
         .then(response => response.json())
         .then(data => {
