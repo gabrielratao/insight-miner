@@ -33,6 +33,10 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
+
+
+
+
 //Criar cadastro de usuario
 document.addEventListener("DOMContentLoaded", function() {
     // Função para cadastrar um novo usuário
