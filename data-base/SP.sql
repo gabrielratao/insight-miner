@@ -215,7 +215,7 @@ begin
 	return
 end
 
-select Usuarios_Donos.nome, Usuarios_Donos.email, Usuarios_Donos.senha, Empresas.nome as "empresa",  Tipo_Empresa.tipo from Usuarios_Donos
+select Usuarios_Donos.nome, Usuarios_Donos.email, Usuarios_Donos.senha, Empresas.nome as "empresa",  Tipo_Empresa.tipo, Usuarios_Donos.dt_nascimento from Usuarios_Donos
 left join Empresas on Usuarios_Donos.id_empresa = Empresas.id_empresa
 left join Tipo_Empresa on Empresas.id_tipo_empresa = Tipo_Empresa.id_tipo_empresa
 where Usuarios_Donos.email = @email
@@ -228,7 +228,8 @@ exec sp_Mostrar_Usuario_Dono
 @email = 'marcelo@l.com'
 
 
-
+exec sp_Mostrar_Plano
+@email = 'defequinho@defeco'
 
 
 -- SP Para mostrar as informações do plano      Nome do plano e limites
