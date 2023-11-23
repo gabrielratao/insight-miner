@@ -78,6 +78,11 @@ app.get('/users/:email', (req, res) =>{
 
 })
 
+//Read tipo de plano
+app.get('/users/plano/:email', (req, res) => {
+    const email = req.params.email
+    execSQLQuery(`exec sp_Mostrar_Plano @email = '${email}' `, res)
+})
 
 //autenticação do usuário
 app.get('/users/autenticate/:email/:senha', (req, res) =>{

@@ -51,7 +51,48 @@ async function readUser(){
         alert('Usuário não existe')
     }
     else{
-        console.log(result.recordset[0].tipo)
+
+        if (email !== ''){
+            console.log(result.recordset[0])
+
+            var form = document.getElementById('profileForm')
+            var nome = document.getElementById('jud-nome')
+            var senha = document.getElementById('jud-senha')
+            var empresa = document.getElementById('nome-empresa')
+            var tipo = document.getElementById('tipo-empresa')
+            var dt_nascimento = document.getElementById('jud-dt-Nascimento')
+            var btn_alterar_dado = document.getElementById('alterar-dado')
+            var btn_deletar_dado = document.getElementById('deletar-dado')
+            var text_inical_plano = document.getElementById('info-inicial-plano')
+            var tipo_plano = document.getElementById('tipo-plano')
+            var limite_plano = document.getElementById('limite-plano')
+    
+            form.style.display = 'Block'
+            btn_alterar_dado.style.display = 'Block'
+            btn_deletar_dado.style.display = 'Block'
+            senha.type = 'text'
+            text_inical_plano.style.display = 'none'
+
+            nome.value = result.recordset[0].nome
+            senha.value = result.recordset[0].senha
+            empresa.value = result.recordset[0].empresa
+            tipo.value = result.recordset[0].tipo
+            dt_nascimento.value = result.recordset[0].dt_nascimento.slice(0, 10)
+
+
+            //mostrar o tipo de plano
+            const response2 = await fetch(`http://localhost:3000/users/plano/${email}`, {
+                method: "GET",
+                dataType: "json"
+            });
+
+            const result2 = await response2.json()
+
+            tipo_plano.textContent = result2.recordset[0].tipo
+            limite_plano.textContent = result2.recordset[0].limite_usuarios
+
+        }
+  
     }
     // console.log(result)
 }
