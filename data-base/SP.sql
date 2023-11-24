@@ -268,15 +268,26 @@ exec sp_Mostrar_Plano
 -- SP Alterar Cadastro Usuário Dono   Nome, Email, Senha, Empresa, Ramo
 alter procedure sp_Alterar_Usuario_Dono
 @email varchar(1000),
-@email_novo varchar(1000),
 @nome_usuario varchar(1000),
+@dt_nascimento date,
 @senha varchar(1000),
 @nome_empresa varchar(1000),
-@ramo_empresa varchar(1000)
+@ramo_empresa varchar(1000)    
 
 
 as
 begin
+
+--verificar idade
+declare @idade int;
+set @idade = DATEDIFF(YEAR, @dt_nascimento, GETDATE());
+
+if @idade < 18
+begin
+	RAISERROR('Usuário menor de idade', 16, 1)
+	PRINT 'Para ter conta, o usuário deve ter acima de 18 anos de idade'
+	return 
+end
 
 -- verificar se existe o usuário
 if (select count(id_usuario) from Usuarios_Donos
@@ -287,24 +298,25 @@ begin
 	return
 end
 
+
 UPDATE Usuarios_Donos
 SET nome = @nome_usuario,
-    email = @email_novo,
-    senha = @senha
+    senha = @senha,
+	dt_nascimento = @dt_nascimento
 where email = @email
 
 UPDATE Empresas
 SET Empresas.nome = @nome_empresa
 from Empresas
 left join Usuarios_Donos ON Usuarios_Donos.id_empresa = Empresas.id_empresa
-where Usuarios_Donos.email = 'amorim@lm.com'
+where Usuarios_Donos.email = @email
 
 UPDATE Tipo_Empresa
 SET Tipo_Empresa.tipo = @ramo_empresa
 from Tipo_Empresa
 left join Empresas ON Empresas.id_tipo_empresa = Tipo_Empresa.id_tipo_empresa
 left join Usuarios_Donos ON Usuarios_Donos.id_empresa = Empresas.id_empresa
-where Usuarios_Donos.email = 'amorim@lm.com'
+where Usuarios_Donos.email = @email
 
 PRINT 'Alterações do usuário realizadas com sucesso'
 

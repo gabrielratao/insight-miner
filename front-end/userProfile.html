@@ -56,19 +56,19 @@
 
                 <form id="profileForm" style="display: none;">
                     <label for="jud-nome">Nome completo:</label>
-                    <input type="text" id="jud-nome" name="jud-nome" placeholder="Nome completo" readonly>
+                    <input type="text" id="jud-nome" name="jud-nome" placeholder="Nome completo">
 
                     <label for="jud-dt-Nascimento">Data de Nascimento:</label>
-                    <input type="text" id="jud-dt-Nascimento" name="jud-dt-Nascimento" readonly>
+                    <input type="text" id="jud-dt-Nascimento" name="jud-dt-Nascimento">
 
                     <br>
 
                     <label for="jud-senha">Senha:</label>
-                    <input type="password" id="jud-senha" name="jud-senha" placeholder="Senha" readonly>
+                    <input type="password" id="jud-senha" name="jud-senha" placeholder="Senha">
                     <br>
 
                     <label for="nome-empresa">Nome da empresa:</label>
-                    <input type="text" id="nome-empresa" name="nome-empresa" placeholder="Nome da empresa" readonly>
+                    <input type="text" id="nome-empresa" name="nome-empresa" placeholder="Nome da empresa">
 
                     <label for="tipo-empresa">Tipo de empresa:</label>
                     <input type="text" id="tipo-empresa" name="nome-empresa" placeholder="Nome da empresa" readonly>
@@ -80,8 +80,8 @@
                 
                 <button type="button" id="mostrar-dado" class="btn" onclick="readUser()">Mostrar dados</button>
                 
-                <button type="button" id="alterar-dado" class="btn" style="display: none;">Alterar dados</button>
-                <button type="button" id="deletar-dado" class="btn" style="display: none;">Deletar conta</button>
+                <button type="button" id="alterar-dado" class="btn" style="display: none;" onclick="alterUser()">Alterar dados</button>
+                <button type="button" id="deletar-dado" class="btn" style="display: none;" onclick="deleteUser()">Deletar conta</button>
                
 
                 <p id="demo"></p>
@@ -104,6 +104,7 @@
                     -->
                     <div>
                         <p id="info-inicial-plano">
+                            <br>
                             Todo usuário por padrão
                             começa com o plano inicial
                             <br>
@@ -113,11 +114,13 @@
                         </p>
 
                         <p>
-                            Plano:  <span id="tipo-plano"></span>  <br>
-                            Limite Usuarios: <span id="limite-plano"></span>
+                            <span id="tipo-plano" style="display: none;"></span>  <br>
+                            <span id="limite-plano" style="display: none;"></span>
                         </p>
 
                     </div>
+
+                    
 
                 
                 </div>

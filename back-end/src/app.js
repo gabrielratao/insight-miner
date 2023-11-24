@@ -128,7 +128,7 @@ app.delete('/users/:email', (req, res) => {
 app.put('/users', (req, res) => {
     
     const email = req.body.email
-    const email_novo = req.body.email_novo
+    const dt_nascimento = req.body.dt_nascimento
     const nome_usuario = req.body.nome_usuario
     const senha = req.body.senha
     const nome_empresa = req.body.nome_empresa
@@ -136,7 +136,7 @@ app.put('/users', (req, res) => {
 
     execSQLQuery(`exec sp_Alterar_Usuario_Dono 
                 @email = '${email}',
-                @email_novo = '${email_novo}',
+                @dt_nascimento = '${dt_nascimento}',
                 @nome_usuario = '${nome_usuario}',
                 @senha = '${senha}',
                 @nome_empresa = '${nome_empresa}',

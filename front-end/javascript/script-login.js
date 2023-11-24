@@ -55,7 +55,6 @@ async function logIn(){
         console.log('Acesso negado')
         alert('Acesso negado. Credenciais incorretas')
     }
-
     else if (result === 'Usuário não existe'){
         alert('Usuário não existe')
     }

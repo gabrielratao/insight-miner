@@ -88,71 +88,84 @@ async function readUser(){
 
             const result2 = await response2.json()
 
-            tipo_plano.textContent = result2.recordset[0].tipo
-            limite_plano.textContent = result2.recordset[0].limite_usuarios
+            tipo_plano.textContent = 'Plano: ' + result2.recordset[0].tipo
+            tipo_plano.style.display = 'Block'
+            limite_plano.textContent = 'Limite usuários: ' + result2.recordset[0].limite_usuarios
+            limite_plano.style.display = 'Block'
 
         }
   
     }
     // console.log(result)
 }
-
-// function readUser(){
-//     var email = document.getElementById('email')
-//     var texto = email.value
-//     console.log(texto)
     
-// }
+// Alterar usuario 
+async function alterUser(){
+    var email = document.getElementById('email').value
+    var nome_usuario = document.getElementById('jud-nome').value
+    var dt_nascimento = document.getElementById('jud-dt-Nascimento').value
+    var senha = document.getElementById('jud-senha').value
+    var nome_empresa = document.getElementById('nome-empresa').value
+    var ramo_empresa = document.getElementById('tipo-empresa').value
 
-// document.addEventListener('DOMContentLoaded', readUser)
-
-
-
-
-
-// Alterar dados do usuario
-
-
-
-
-//---------------------------------------------------------------
-// Deletar usuario
-// document.addEventListener("DOMContentLoaded", function () {
-
-//     const btnCall = document.getElementById("DelDados");
-    
-//     btnCall.addEventListener('click', function() {
-        
-
-//         let senhaConfirm = prompt ("Digite sua senha para confirmar");
-//         if (senhaConfirm == "senha correta") {
-//             //Aqui entra a logica do delete que foi feito no back-en
-
-//             //redireciona para a pagina de despedida
-//             window.location.href = "despedida.html";
-//         } else {
-//             alert("Senha incorrenta. Por favor, tente novamente.")
-//         }
-//     })
-
-
-// })
-
-/*function deletConfirm () {
-    let alert;
-    let senha = prompt ("Porfavor digite sua senha para confirmar");
-    if (senha == null || senha == "") {
-        alert = "Senha incorreta por favor digite novamente";
-    } else {
-        alert = "Seus dados foram deletados com sucesso";
+    var data = {
+        email: email,
+        nome_usuario: nome_usuario,
+        dt_nascimento: dt_nascimento,
+        senha: senha,
+        nome_empresa: nome_empresa,
+        ramo_empresa: ramo_empresa
     }
+    // console.log(data)
+    const response = await fetch(`http://localhost:3000/users`, {
+        method: "PUT",
+        dataType: "json",
+        body: JSON.stringify(data),
+        headers: {
+            "Content-Type": "application/json"
+        },
+    });
 
-    document.getElementById("demo").innerHTML = alert;
-}*/
+    const result = await response.json()
+
+    console.log(result)
+    if (result === 'Usuário não existe'){
+        alert('Usuário não existe')
+    }
+    else if (result === 'Usuário menor de idade'){
+        alert('Usuário menor de idade')
+    }
+    else{
+        alert('Usuário alterado com sucesso')
+    }
+    // if (result.rowsAffected[0] === 1){
+    //     console.log('Usuario alterado com sucesso')
+    // }
+}
 
 
-//---------------------------------------------------------------
-//Mostrar plano do usuario
+
+
+// Deletar usuario
+async function deleteUser() {
+
+    var email = document.getElementById('email').value
+    
+    const response = await fetch(`http://localhost:3000/users/${email}`, {
+                method: "DELETE",
+                dataType: "json"
+            });
+    const result = await response.json()
+
+    console.log(result)
+    if (result === 'Usuário não existe'){
+        alert('Usuário não existe')
+    }
+    else{
+        alert('Usuário deletado com sucesso')
+    }
+    
+}   
 
 
 

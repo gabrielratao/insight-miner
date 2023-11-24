@@ -34,86 +34,102 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
+async function createUserJuridico(){
+    // Obter os valores dos campos do formulário jurídico
+    var email = document.getElementById("jud-email").value;
+    var nome = document.getElementById("jud-nome").value;
+    var dtNascimento = document.getElementById("-jud-dt-Nascimento").value;
+    var senha = document.getElementById("jud-senha").value;
+    var nomeEmpresa = document.getElementById("nome-empresa").value;
+    var tipoEmpresa = document.getElementById("tipo-empresa").value;
 
+    // Formatar os dados em um objeto JSON
+    var dadosJuridicos = {
+        email: email,
+        nome: nome,
+        dt_nascimento: dtNascimento,
+        senha: senha,
+        nome_empresa: nomeEmpresa,
+        tipo_empresa: tipoEmpresa
+    };
+    console.log(dadosJuridicos)
 
+    // Fazer a requisição à API
 
-//Criar cadastro de usuario
-document.addEventListener("DOMContentLoaded", function() {
-    // Função para cadastrar um novo usuário
-    function cadastrarUsuario() {
-        // Verificar qual formulário está visível
-        var judForm = document.getElementById("juridico");
-        var depenForm = document.getElementById("juridico_dependente");
+    const response = await fetch('http://localhost:3000/users', {
+        method: "POST",
+        dataType: "json",
+        body: JSON.stringify(dadosJuridicos),
+        headers: {
+            "Content-Type": "application/json"
+        },
+    })
 
-        if (judForm.style.display === "block") {
-            // Se o formulário jurídico estiver visível, cadastrar um usuário jurídico
-            cadastrarUsuarioJuridico();
-        } else if (depenForm.style.display === "block") {
-            // Se o formulário dependente estiver visível, cadastrar um usuário dependente
-            cadastrarUsuarioDependente();
-        } else {
+    const result = await response.json();
+
+    console.log(result)
+
+    if (result === 'Já há um dono para essa empresa'){
+        alert('Já há um dono para essa empresa')
     }
+    else if (result === 'Usuário menor de idade'){
+        alert('Usuário menor de idade')
     }
+    else{
+        alert('Usuário cadastrado com sucesso')
+        window.location.href = ('./userProfile.html')
+    }
+    // fetch('http://localhost:3000/users', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json'
+    //     },
+    //     // body: JSON.stringify(dadosJuridicos),
+    //     body: JSON.stringify(dadosJuridicos),
+    //     dataType: "json"
+    // })
+    // .then(response => response.json())
+    // .catch(error => {
+    //     console.error('Erro na requisição:', error);
+    // });
+
     
-    // Função para cadastrar um novo usuário jurídico
-    function cadastrarUsuarioJuridico() {
-        // Obter os valores dos campos do formulário jurídico
-        var email = document.getElementById("jud-email").value;
-        var nome = document.getElementById("jud-nome").value;
-        var dtNascimento = document.getElementById("-jud-dt-Nascimento").value;
-        var senha = document.getElementById("jud-senha").value;
-        var nomeEmpresa = document.getElementById("nome-empresa").value;
-        var tipoEmpresa = document.getElementById("tipo-empresa").value;
+}
 
-        // Formatar os dados em um objeto JSON
-        var dadosJuridicos = {
-            email: email,
-            nome: nome,
-            dt_nascimento: dtNascimento,
-            senha: senha,
-            nome_empresa: nomeEmpresa,
-            tipo_empresa: tipoEmpresa
-        };
-        console.log(dadosJuridicos)
-        // var dadosJuridicos = {
-        //     email: 'bosta@bosta.com',
-        //     nome: 'Bosta',
-        //     dt_nascimento: '2010/05/10',
-        //     senha: 'senha',
-        //     nome_empresa: 'Defeco @ Bosta',
-        //     tipo_empresa:  'varejo'
-        // };
 
-        // Fazer a requisição à API
-        console.log('teste')
-        fetch('http://localhost:3000/users', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            // body: JSON.stringify(dadosJuridicos),
-            body: JSON.stringify(dadosJuridicos),
-            dataType: "json"
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Lidar com a resposta da API, por exemplo, redirecionar ou exibir uma mensagem
-            console.log(data);
-        })
-        .catch(error => {
-            console.error('Erro na requisição:', error);
-        });
+
+function createUserDependente(){
+    console.log('Criar Usuario dependente')
+}
+
+function createUser(){
+    // Verificar qual formulário está visível
+    var judForm = document.getElementById("juridico");
+    var depenForm = document.getElementById("juridico_dependente");
+
+    if (judForm.style.display === "block") {
+        // Se o formulário jurídico estiver visível, cadastrar um usuário jurídico
+        createUserJuridico();
+    } else if (depenForm.style.display === "block") {
+        // Se o formulário dependente estiver visível, cadastrar um usuário dependente
+        createUserDependente();
     }
+}
 
-    // Função para cadastrar um novo usuário dependente
-    function cadastrarUsuarioDependente() {
-        console.log("Função para cadastrar usuário dependente");
-    }
 
-    // Adicionando event listener ao botão de cadastro
-    var cadUserBtn = document.getElementById("cad-user");
 
-    if (cadUserBtn) {
-        cadUserBtn.addEventListener("click", cadastrarUsuario);
-    }
-});
+
+//Criar cadastro de usuario depentendete
+
+
+// Função para cadastrar um novo usuário dependente
+// function cadastrarUsuarioDependente() {
+//     console.log("Função para cadastrar usuário dependente");
+// }
+
+// // Adicionando event listener ao botão de cadastro
+// var cadUserBtn = document.getElementById("cad-user");
+
+// if (cadUserBtn) {
+//     cadUserBtn.addEventListener("click", cadastrarUsuario);
+// }
