@@ -28,8 +28,9 @@ body{
 
 .card {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    place-items: center;
+    grid-template-columns: 3fr 1fr ;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    justify-content: center;
     padding: 50px;
     margin: 100px;
     width: 62.5rem;
@@ -39,24 +40,34 @@ body{
     border-radius: 50px;
 }
 
+#Dados-Usuario{
+    grid-template-columns: 1;
+    justify-content: space-evenly;
+}
+
+#Plano {
+    /*justify-content: space-evenly;*/
+    justify-items: center;
+}
+
 h5 {
     font-family: 'Roboto mono', monospace;
-    text-align: center;
+}
+
+#rectangle-suaconta {
+    border: 1px solid #0C2A3B;
+    width: 500px;
+    margin-bottom: 10px;
+}
+
+#rectangle-plano {
+    border: 1px solid #0C2A3B;
+    margin-bottom: 10px;
 }
 
 h6 {
     border: #284B63;
     padding: 5px;
-}
-
-ul {
-    border: 1px solid #284B63;
-    border-radius: 10px;
-    padding: 5px;
-}
-
-li {
-    list-style: none;
 }
 
 p {
@@ -67,14 +78,104 @@ p {
 #flexbox {
     border: 1px solid #284B63;
     border-radius: 10px;
+    margin: 10px;
     padding: 5px;
     width: 200px;
+}
+
+#coisa {
+    border: 0px solid red;
+    display: inline-flex;
+}
+
+.card input{
+    /*layout*/
+    margin: 10px;
+    padding: 5px;
+    width: 400px;
+    height: 40px;
+    /*style*/
+    border-radius: 5px;
+    border: 1px solid #153243;
+    background: #EEF0EB;
+    box-shadow: 5px 5px 10px 2px rgba(51, 51, 51, 0.20) inset;
+}
+
+#jud-dt-Nascimento {
+    /*layout*/
+    margin: 10px;
+    padding: 5px;
+    width: 295px;
+    height: 40px;
+    /*style*/
+    border-radius: 5px;
+    border: 1px solid #153243;
+    background: #EEF0EB;
+    box-shadow: 5px 5px 10px 2px rgba(51, 51, 51, 0.20) inset;
+}
+
+#jud-nome {
+    /*layout*/
+    margin: 10px;
+    padding: 5px;
+    width: 325px;
+    height: 40px;
+    /*style*/
+    border-radius: 5px;
+    border: 1px solid #153243;
+    background: #EEF0EB;
+    box-shadow: 5px 5px 10px 2px rgba(51, 51, 51, 0.20) inset;
+}
+
+#jud-senha {
+    /*layout*/
+    margin: 10px;
+    padding: 5px;
+    width: 395px;
+    height: 40px;
+    /*style*/
+    border-radius: 5px;
+    border: 1px solid #153243;
+    background: #EEF0EB;
+    box-shadow: 5px 5px 10px 2px rgba(51, 51, 51, 0.20) inset;
+}
+
+#nome-empresa {
+    /*layout*/
+    margin: 10px;
+    padding: 5px;
+    width: 310px;
+    height: 40px;
+    /*style*/
+    border-radius: 5px;
+    border: 1px solid #153243;
+    background: #EEF0EB;
+    box-shadow: 5px 5px 10px 2px rgba(51, 51, 51, 0.20) inset;
+}
+
+#tipo-empresa {
+    /*layout*/
+    margin: 10px;
+    padding: 5px;
+    width: 320px;
+    height: 40px;
+    /*style*/
+    border-radius: 5px;
+    border: 1px solid #153243;
+    background: #EEF0EB;
+    box-shadow: 5px 5px 10px 2px rgba(51, 51, 51, 0.20) inset;
+}
+
+#coisa2 {
+    border: 0px solid red;
+    justify-items: center;
+    margin-left: 20px;
 }
 
 .card .btn {
     /*layout*/
     margin: 10px;
-    display: inline-flex;
+    display: inline-block;
     padding: 9px 45px;
     border-radius: 5px;
     background: #255875;

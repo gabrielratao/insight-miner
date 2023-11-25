@@ -43,13 +43,13 @@ body{
 }
 
 h3 {
-    border: 1px solid red;
+    border: 0px solid red;
     text-align: center;
 
 }
 
 #tipo_conta {
-    border: 1px solid red;
+    border: 0px solid red;
 
 }
 
@@ -58,7 +58,7 @@ h3 {
 }*/
 
 #juridico {
-    border: 1px solid red;
+    border: 0px solid red;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
@@ -67,7 +67,7 @@ h3 {
 }
 
 #juridico_dependente {
-    border: 1px solid red;
+    border: 0px solid red;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;

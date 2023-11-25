@@ -35,6 +35,7 @@
     }
 }); */
 
+//------------------------------------------------------------------------------------------
 // Mostrar dados do usuário
 
 async function readUser(){
@@ -98,7 +99,9 @@ async function readUser(){
     }
     // console.log(result)
 }
-    
+
+
+//------------------------------------------------------------------------------------------
 // Alterar usuario 
 async function alterUser(){
     var email = document.getElementById('email').value
@@ -145,7 +148,7 @@ async function alterUser(){
 
 
 
-
+//------------------------------------------------------------------------------------------
 // Deletar usuario
 async function deleteUser() {
 
