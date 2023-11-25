@@ -13,7 +13,7 @@ body{
     height: 100vh;
 }
 
-.card {
+/*.card {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -25,12 +25,63 @@ body{
     box-shadow: 0px 6px 25px 2px rgba(34, 34, 34, 0.50);
     border-radius: 50px;
 }
+*/
 
-.card form {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+.card {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    place-items: center;
+    padding: 50px;
+    margin: 100px;
+    width: 62.5rem;
+    height: 37.5rem;
+    background-color: #EEF0EB;
+    box-shadow: 0px 6px 25px 2px rgba(34, 34, 34, 0.50);
+    border-radius: 50px;
+    
 }
+
+h3 {
+    border: 1px solid red;
+    text-align: center;
+
+}
+
+#tipo_conta {
+    border: 1px solid red;
+
+}
+
+/*h5 {
+    text-align: center;
+}*/
+
+#juridico {
+    border: 1px solid red;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    place-items: center;
+    padding-left: 25px;
+}
+
+#juridico_dependente {
+    border: 1px solid red;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    place-items: center;
+    padding-left: 25px;
+}
+
+/*.card form {
+    border: 1px solid red;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid
+
+}*/
 
 .card input{
     /*layout*/
