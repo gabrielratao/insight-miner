@@ -75,6 +75,9 @@ async function createUserJuridico(){
     else if (result === 'Usuário menor de idade'){
         alert('Usuário menor de idade')
     }
+    else if (result === 'Usuário já cadastrado no sistema'){
+        alert('Usuário já cadastrado no sistema')
+    }
     else{
         alert('Usuário cadastrado com sucesso')
         window.location.href = ('./userProfile.html')

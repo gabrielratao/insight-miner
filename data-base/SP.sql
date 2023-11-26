@@ -1,4 +1,3 @@
-
 -- SP CRIAÇÃO DE USUÁRIO JURÍDICO DONO
 alter procedure sp_Criar_Juridico_Dono
 @nome varchar(1000),
@@ -42,6 +41,14 @@ if (select count(id_empresa) from Empresas
 begin 
 	RAISERROR('Já há um dono para essa empresa', 16, 1)
 	PRINT 'JÁ HÁ UM DONO PARA ESSA EMPRESA'
+	return
+end
+
+if (select count(id_usuario) from Usuarios_Donos
+	where email = @email) = 1
+begin
+	RAISERROR('Usuário já cadastrado no sistema', 16, 1)
+	PRINT 'Usuário já cadastrado no sistema'
 	return
 end
 
