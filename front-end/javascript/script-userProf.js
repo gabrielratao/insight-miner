@@ -166,6 +166,8 @@ async function deleteUser() {
     }
     else{
         alert('Usuário deletado com sucesso')
+
+        window.location.href = 'despedida.html'
     }
     
 }   
