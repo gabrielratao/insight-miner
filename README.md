@@ -33,7 +33,7 @@ Gerar insights de forma visual sobre os temas que estão circulando nas redes so
 Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 - HTML, CSS, JavaSript
-- Python, MySQL, Node.JS
+- Python, SQL Server, Node.JS
 - Git e Github
 - Figma
 
