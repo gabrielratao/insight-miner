@@ -1,0 +1,117 @@
+html{
+    background-color: #1f1f1f;
+    
+}
+
+body {
+    
+    font-family: helvetica;
+    color: #fff;
+} 
+
+header{
+    height: 20vh;
+    
+    background-color: #898989;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+
+
+.in-progress{
+    height: 10vh;
+    width: 22vw;
+
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+nav{
+    margin-right: 5vw;
+}
+nav ul {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    margin-left: 50vw;
+
+  }
+  
+nav ul li {
+    margin-left: 30px;
+  }
+  
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+  }
+
+h1{
+    font-family: 'Impact';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 100px;
+    margin: 0;
+    margin-top: 5vh;
+    text-align: center;
+    background-color: black;
+
+}
+h2{
+    font-family: 'Impact';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 70px;
+    margin: 0;
+    margin-top: 5vh;
+}
+
+p{
+    margin-top: 7vh;
+    
+    font-family: sans-serif;
+    font-style: normal;
+    font-weight: 100;
+    font-size: 20px;
+}
+
+section{
+    height: 100vh;
+    
+
+    display: flex;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.problem{
+    margin-top: 20vh;
+}
+
+.objective-content{
+    text-align: right;
+}
+
+footer {
+    height: 20vh;
+    
+    background-color: #5D5D5D;
+    padding: 30px;
+    box-sizing: border-box;
+    text-align: center;
+    
+}
+
+footer ul{
+    list-style-type: none;
+}
+footer ul li a{
+    text-decoration: none;
+    color: white;
+   
+}
