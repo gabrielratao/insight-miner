@@ -1,11 +1,13 @@
-import logo from './SVG/logo.svg';
+import eng from './Components/SVG/eng.svg'
+import Nav from './Components/NavBar/NavBar';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+    <section className="App">
+      <Nav />
+      <div className="App-section">
+        <img src={eng} className="App-logo" />
         <p>
           minerando insights
         </p>
@@ -17,8 +19,8 @@ function App() {
         >
           About Project
         </a>
-      </header>
-    </div>
+      </div>
+    </section>
   );
 }
 
