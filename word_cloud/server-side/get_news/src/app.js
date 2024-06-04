@@ -194,8 +194,9 @@ function extract_info_news(data, search_word){
     console.log('Não há mais noticias')
 }
 
-// python, javascript, technology, mongodb, frontend, backend, web, development
-const search_word = 'development'
+// python, javascript, technology, mongodb, frontend, backend, web, development, woman, coke, ai
+// chatgpt, gemini, copilot
+const search_word = 'copilot'
 get_news(search_word)
     .then(data => {
         // display_news(data)
