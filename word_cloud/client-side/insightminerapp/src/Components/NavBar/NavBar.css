@@ -1,0 +1,26 @@
+.headNav {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #F4F9E9;
+
+}
+
+.navBar {
+    border: 1px solid blue;
+}
+
+.iconNav {
+    display: flex;
+    align-items: center;
+    
+}
+
+.logoNav {
+    width: 100px;
+}
+
+.aNav{
+    margin: 30px;
+}
