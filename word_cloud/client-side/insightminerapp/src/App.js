@@ -11,7 +11,7 @@ function App() {
     <section className="App">
       <Nav />
       <div className='Content'>
-        <AuditData />
+        <Loading />
       </div>
     </section>
   );
