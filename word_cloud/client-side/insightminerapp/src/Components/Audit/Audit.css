@@ -1,0 +1,38 @@
+.audit-section{
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-box-audit{
+    border: 1px solid red;
+    padding: 20px;
+    display: flex;
+    column-gap: 5px;
+}
+
+.tableContent {
+    border: 1px solid yellow;
+    padding: 20px;
+    margin: 20px;
+}
+
+table{
+    padding: 20px;
+    border: 1px solid yellow;
+}
+
+
+th{
+    border: 1px solid yellow;
+    padding: 10px;
+    color: #F4F9E9;
+}
+
+td {
+    border: 1px solid yellow;
+    padding: 10px;
+    color: #F4F9E9;
+}

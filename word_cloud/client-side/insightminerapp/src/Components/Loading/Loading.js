@@ -20,7 +20,7 @@ export default function Engload() {
           
           
           <button className='btn-start'>Começar</button>
-          <button className='Auditoria'>Auditoria</button>
+          <button className='btn-auditoria'>Auditoria</button>
         </div>
       </div>
     )
