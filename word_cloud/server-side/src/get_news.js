@@ -158,7 +158,7 @@ async function get_news(search_word) {
     }
 }
 
-//mostra na tela as noticias obtidas
+//mostra na tela as noticias obtidas  IGNORAR NO TESTE
 function display_news(data){
     console.log('############### NOTÍCIAS ###############')
     console.log('Principais títulos de notícias relacionados a palavra')
@@ -196,20 +196,21 @@ function extract_info_news(data, search_word){
 
 // python, javascript, technology, mongodb, frontend, backend, web, development, woman, coke, ai
 // chatgpt, gemini, copilot
-const search_word = 'copilot'
-get_news(search_word)
-    .then(data => {
-        // display_news(data)
-        extract_info_news(data, search_word)
-    })
-    .catch(error => {
-        console.error('Erro ao buscar dados de noticias ', error.message);
-    });
+// const search_word = 'copilot'
+// get_news(search_word)
+//     .then(data => {
+//         // display_news(data)
+//         extract_info_news(data, search_word)
+//     })
+//     .catch(error => {
+//         console.error('Erro ao buscar dados de noticias ', error.message);
+//     });
 
 // update_mongo(url, title)
 // read_mongo('www.arromassi')
 
 
-// read_all_mongo()
+read_all_mongo()
+
 
 
