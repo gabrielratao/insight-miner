@@ -13,7 +13,9 @@ export default function Nav() {
             </div>
             <nav className='navBar'>
                 <a href='' className='aNav'>Contact</a>
-                <a href='' className='aNav'>About</a>
+                <a href='https://github.com/gabrielratao/insight-miner/blob/main/README.md' 
+                target='blanke'
+                className='aNav'>About</a>
             </nav>
         </header>
     )

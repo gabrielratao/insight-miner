@@ -18,3 +18,14 @@
 .search-input{
     width: 400px;
 }
+
+.wordcloud-box{
+    border: 1px solid red;
+    padding: 15px;
+    width: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+}

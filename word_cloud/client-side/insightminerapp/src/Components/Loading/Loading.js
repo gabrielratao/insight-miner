@@ -5,9 +5,6 @@ export default function Engload() {
     return(
         <div className="loading">
         <img src={eng} className="App-logo" />
-        <p>
-          minerando ideias
-        </p>
         
         <div className='section-loading'>
             {/*<a
@@ -17,10 +14,13 @@ export default function Engload() {
             rel="noopener noreferrer"
             >
             About Project
-             </a>*/}
-            <button 
-            className='btn-about'>About Project</button>
-            <button className='btn-start'>Começar</button>
+             </a>
+             <p>Minerando ideias</p>
+             */}
+          
+          
+          <button className='btn-start'>Começar</button>
+          <button className='Auditoria'>Auditoria</button>
         </div>
       </div>
     )
