@@ -5,6 +5,7 @@ import logo from '../SVG/logo.svg'
 
 
 export default function Nav() {
+    
     return (
         <header className="headNav">
             <div className='iconNav'>
@@ -12,6 +13,7 @@ export default function Nav() {
                 <h2>InsightMiner</h2>
             </div>
             <nav className='navBar'>
+                <a className=''></a>
                 <a href='' className='aNav'>Contact</a>
                 <a href='https://github.com/gabrielratao/insight-miner/blob/main/README.md' 
                 target='blanke'
