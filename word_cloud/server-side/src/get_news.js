@@ -1,7 +1,8 @@
 const fetch = require('node-fetch');
 const mongoose = require('mongoose');
 const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, 'C:/Users/dell/dev/.env') });
+// require('dotenv').config({ path: path.resolve(__dirname, 'C:/Users/dell/dev/.env') });
+require('dotenv').config();
 
 
 

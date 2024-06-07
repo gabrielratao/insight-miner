@@ -3,3 +3,5 @@ node_modules
 srcap_sm
 back-end/IM_ENV/
 scrap_sm/
+.env
+.xlsx
