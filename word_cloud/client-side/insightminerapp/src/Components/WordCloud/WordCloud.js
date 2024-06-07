@@ -1,6 +1,7 @@
 import './WordCloud.css';
 import React, { useState } from 'react';
 import { TagCloud } from 'react-tagcloud';
+import Engload from '../Loading/Loading'
 
 const WordCloud = () => {
     const [chave, setChave] = useState('');
