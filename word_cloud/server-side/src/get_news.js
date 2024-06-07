@@ -3,12 +3,13 @@ const mongoose = require('mongoose');
 const path = require('path');
 // require('dotenv').config({ path: path.resolve(__dirname, 'C:/Users/dell/dev/.env') });
 require('dotenv').config();
-
+// require('dotenv').config({ path: require('path').resolve(__dirname, '../../.env') });
 
 
 const news_api_key = process.env.News_api_key
 // const uri = process.env.MongoURL;
 const uri = process.env.Uri;
+console.log(uri)
 const data_base = 'api_news' //nome do banco de dados
 
 // console.log(uri)
