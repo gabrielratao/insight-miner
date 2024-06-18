@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const endpointWordCloudRoutes = require('./routes/endpoint_word_cloud');
+const endpointSearchWord = require('./routes/endpoint_crud_search_word');
 const cors = require('cors')
 
 const app = express();
@@ -20,6 +21,8 @@ app.get('/teste', (req, res) => {
 
 // Usar as rotas definidas em endpoint_word_cloud.js
 app.use('/api', endpointWordCloudRoutes);
+
+app.use('/api', endpointSearchWord);
 
 // Inicie o servidor
 app.listen(port, () => {
