@@ -50,7 +50,7 @@ router.get('/news', async (req, res) => {
 
 
 
-router.get('/words', async (req, res) => {
+router.get('/words/cloud', async (req, res) => {
     const searchWord = req.query.search_word;
     if (!searchWord) {
       return res.status(400).send('search_word não fornecido');

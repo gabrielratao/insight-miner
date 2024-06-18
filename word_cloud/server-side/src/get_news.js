@@ -2,8 +2,9 @@ const fetch = require('node-fetch');
 const mongoose = require('mongoose');
 const path = require('path');
 // require('dotenv').config({ path: path.resolve(__dirname, 'C:/Users/dell/dev/.env') });
-require('dotenv').config();
+// require('dotenv').config();
 // require('dotenv').config({ path: require('path').resolve(__dirname, '../../.env') });
+require('dotenv').config({ path: path.resolve(__dirname, '../../../word_cloud/server-side/.env') });
 
 
 const news_api_key = process.env.News_api_key
@@ -26,12 +27,33 @@ const newsSchema = new mongoose.Schema({
         title: String,
         search_word: String,
         content: String,
-        description: String
+        description: String,
+        date_created: Date,
+        date_audit: Date
 
-}, { collection: 'news_content' }); //definie o nome da coleção
+}, { 
+    timestamps: true,
+    collection: 'news_content' }); //definie o nome da coleção
+
 
 // Define o modelo do documento
 const News = mongoose.model('News', newsSchema);
+
+
+
+// Define o esquema do documento
+const wordsSchema = new mongoose.Schema({
+  // Defina a estrutura do seu documento aqui
+  
+      words: [String]
+
+}, { 
+  timestamps: true,
+  collection: 'news_content' }); //definie o nome da coleção
+
+
+// Define o modelo do documento
+const Words = mongoose.model('Words', wordsSchema);
 
 // function update_mongo(url, title, search_word, content, description){
 //     // // Define o modelo do documento
@@ -87,7 +109,9 @@ function update_mongo(url, title, search_word, content, description) {
             title: title,
             search_word: search_word,
             content: content,
-            description: description
+            description: description,
+            date_created: new Date(),
+            date_audit: null
             // Outros campos, se necessário
         });
 
@@ -122,6 +146,59 @@ async function read_mongo(url) {
       throw error;
     }
   }
+
+
+//le o documento especifico que contem uma lista de palavras a serem pesquisadas na API de noticias
+async function read_words_to_search() {
+  const id_document = '6670d8dcde7b4b99e1bd8c05'
+  // Define o modelo do documento
+  const Words = mongoose.model('Words', wordsSchema);
+  try {
+    const words = await Words.findOne({ _id: id_document });
+    if (words.words) {
+      console.log('Palavras de pesquisa', words);
+      return words.words;
+    } else {
+      console.log('Documento não encontrado.');
+      return null;
+    }
+  } catch (error) {
+    console.error('Erro ao encontrar o documento:', error);
+    throw error;
+  }
+}
+
+//Essa função adiciona um novo documento verificando se ele ja existe com base na URL da noticia
+function update_mongo(word) {
+  const id_document = '6670d8dcde7b4b99e1bd8c05'
+  // Verifica se um documento com a URL especificada já existe
+  Words.findOne({ _id: id_document })
+  .then((existingDocument) => {
+      if (existingDocument) {
+          console.log('Documento com a URL especificada já existe. Nenhuma ação necessária.');
+          // Cria uma instância do modelo do documento com os dados a serem inseridos
+          const words = new Words({
+          words: url,
+          title: title,
+          search_word: search_word,
+          content: content,
+          description: description,
+          date_created: new Date(),
+          date_audit: null
+          // Outros campos, se necessário
+          });
+      }
+
+  })
+  .catch((error) => {
+      console.error('Erro ao adicionar o documento:', error);
+  });
+}
+
+
+
+
+
 // function read_mongo(url){
 //     // Define o modelo do documento
 //     const News = mongoose.model('News', newsSchema);    
@@ -145,7 +222,7 @@ async function read_all_mongo() {
     // Define o modelo do documento
     const News = mongoose.model('News', newsSchema);
     try {
-      const tasks = await News.find();
+      const tasks = await News.find().sort({ createdAt: -1 });
       if (tasks.length > 0) {
         console.log('Documentos encontrados:', tasks);
         return tasks;
@@ -196,24 +273,24 @@ async function get_news(search_word) {
 }
 
 //mostra na tela as noticias obtidas  IGNORAR NO TESTE
-function display_news(data){
-    console.log('############### NOTÍCIAS ###############')
-    console.log('Principais títulos de notícias relacionados a palavra')
+// function display_news(data){
+//     console.log('############### NOTÍCIAS ###############')
+//     console.log('Principais títulos de notícias relacionados a palavra')
 
-    data.articles.forEach(article => {
-            const { url, title, description, content } = article;
-            console.log(url)
-            console.log(title)
-            console.log(description)
-            console.log(content)
-            console.log('###')
+//     data.articles.forEach(article => {
+//             const { url, title, description, content } = article;
+//             console.log(url)
+//             console.log(title)
+//             console.log(description)
+//             console.log(content)
+//             console.log('###')
             
-        });
+//         });
 
-    console.log('')
-    console.log('##############################')
+//     console.log('')
+//     console.log('##############################')
 
-}
+// }
 
 //extrai os campos da resposta da API e adiciona os principais no mongo
 function extract_info_news(data, search_word){
@@ -231,28 +308,24 @@ function extract_info_news(data, search_word){
     console.log('Não há mais noticias')
 }
 
-// python, javascript, technology, mongodb, frontend, backend, web, development, woman, coke, ai
-// chatgpt, gemini, copilot
-// const search_word = 'copilot'
-// get_news(search_word)
-//     .then(data => {
-//         // display_news(data)
-//         extract_info_news(data, search_word)
-//     })
-//     .catch(error => {
-//         console.error('Erro ao buscar dados de noticias ', error.message);
-//     });
-
-// update_mongo(url, title)
-// read_mongo('www.arromassi')
-
-
-// read_all_mongo()
-
 
 // Lista de stop words em inglês
 const stopWords = [
-    "a", "about", "above", "after", "again", "against", "all", "am", "an", "and", "any", "are", "aren't", "as", "at", "be", "because", "been", "before", "being", "below", "between", "both", "but", "by", "can't", "cannot", "could", "couldn't", "did", "didn't", "do", "does", "doesn't", "doing", "don't", "down", "during", "each", "few", "for", "from", "further", "had", "hadn't", "has", "hasn't", "have", "haven't", "having", "he", "he'd", "he'll", "he's", "her", "here", "here's", "hers", "herself", "him", "himself", "his", "how", "how's", "i", "i'd", "i'll", "i'm", "i've", "if", "in", "into", "is", "isn't", "it", "it's", "its", "itself", "let's", "me", "more", "most", "mustn't", "my", "myself", "no", "nor", "not", "of", "off", "on", "once", "only", "or", "other", "ought", "our", "ours", "ourselves", "out", "over", "own", "same", "shan't", "she", "she'd", "she'll", "she's", "should", "shouldn't", "so", "some", "such", "than", "that", "that's", "the", "their", "theirs", "them", "themselves", "then", "there", "there's", "these", "they", "they'd", "they'll", "they're", "they've", "this", "those", "through", "to", "too", "under", "until", "up", "very", "was", "wasn't", "we", "we'd", "we'll", "we're", "we've", "were", "weren't", "what", "what's", "when", "when's", "where", "where's", "which", "while", "who", "who's", "whom", "why", "why's", "with", "won't", "would", "wouldn't", "you", "you'd", "you'll", "you're", "you've", "your", "yours", "yourself", "yourselves"
+    "a", "about", "above", "after", "again", "against", "all", "am", "an", "and", "any", "are", "aren't", 
+    "as", "at", "be", "because", "been", "before", "being", "below", "between", "both", "but", "by", "can't", 
+    "cannot", "could", "couldn't", "did", "didn't", "do", "does", "doesn't", "doing", "don't", "down", 
+    "during", "each", "few", "for", "from", "further", "had", "hadn't", "has", "hasn't", "have", "haven't", 
+    "having", "he", "he'd", "he'll", "he's", "her", "here", "here's", "hers", "herself", "him", "himself", 
+    "his", "how", "how's", "i", "i'd", "i'll", "i'm", "i've", "if", "in", "into", "is", "isn't", "it", "it's",
+     "its", "itself", "let's", "me", "more", "most", "mustn't", "my", "myself", "no", "nor", "not", "of", 
+     "off", "on", "once", "only", "or", "other", "ought", "our", "ours", "ourselves", "out", "over", "own",
+      "same", "shan't", "she", "she'd", "she'll", "she's", "should", "shouldn't", "so", "some", "such", 
+      "than", "that", "that's", "the", "their", "theirs", "them", "themselves", "then", "there", "there's",
+       "these", "they", "they'd", "they'll", "they're", "they've", "this", "those", "through", "to", "too",
+        "under", "until", "up", "very", "was", "wasn't", "we", "we'd", "we'll", "we're", "we've", "were", 
+        "weren't", "what", "what's", "when", "when's", "where", "where's", "which", "while", "who", "who's",
+         "whom", "why", "why's", "with", "won't", "would", "wouldn't", "you", "you'd", "you'll", "you're", 
+         "you've", "your", "yours", "yourself", "yourselves"
   ];
   
   async function get_clean_concatenated_text_by_search_word(search_word) {
@@ -289,6 +362,29 @@ const stopWords = [
       throw error;
     }
   }
-module.exports = { read_all_mongo, read_mongo, get_clean_concatenated_text_by_search_word };
+
+
+  // python, javascript, technology, mongodb, frontend, backend, web, development, woman, coke, ai
+// chatgpt, gemini, copilot
+// const search_word = 'chatgpt'
+// get_news(search_word)
+//     .then(data => {
+//         // display_news(data)
+//         extract_info_news(data, search_word)
+//     })
+//     .catch(error => {
+//         console.error('Erro ao buscar dados de noticias ', error.message);
+//     });
+
+// update_mongo(url, title)
+// read_mongo('www.arromassi')
+
+
+// read_all_mongo()
+
+
+
+
+module.exports = { read_all_mongo, read_mongo, get_clean_concatenated_text_by_search_word, read_words_to_search };
 
 // get_clean_concatenated_text_by_search_word('python')
