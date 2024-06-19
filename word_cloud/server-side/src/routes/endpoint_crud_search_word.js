@@ -6,7 +6,7 @@ const cors = require('cors')
 const { read_all_mongo } = require('../get_news.js');
 const { read_mongo } = require('../get_news.js');
 const { get_clean_concatenated_text_by_search_word } = require('../get_news.js');
-const { read_words_to_search } = require('../get_news.js');
+const { readWord } = require('../get_news.js');
 
 // const app = express();    
 // app.use(cors())     
@@ -21,7 +21,7 @@ router.get('/sabugo', (req, res) => {
 })
 
 router.get('/words', async (req, res) => {
-    let list_words = await read_words_to_search()
+    let list_words = await readWord()
     res.json({'words_search': list_words})
 })
 
