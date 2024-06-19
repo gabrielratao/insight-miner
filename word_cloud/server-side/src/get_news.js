@@ -148,8 +148,10 @@ async function read_mongo(url) {
   }
 
 
+
+// CRUD DAS PALAVRAS A SERES PESQUISADA
 //le o documento especifico que contem uma lista de palavras a serem pesquisadas na API de noticias
-async function read_words_to_search() {
+async function readWord() {
   const id_document = '6670d8dcde7b4b99e1bd8c05'
   // Define o modelo do documento
   const Words = mongoose.model('Words', wordsSchema);
@@ -168,54 +170,95 @@ async function read_words_to_search() {
   }
 }
 
-//Essa função adiciona um novo documento verificando se ele ja existe com base na URL da noticia
-function update_mongo(word) {
-  const id_document = '6670d8dcde7b4b99e1bd8c05'
-  // Verifica se um documento com a URL especificada já existe
-  Words.findOne({ _id: id_document })
-  .then((existingDocument) => {
-      if (existingDocument) {
-          console.log('Documento com a URL especificada já existe. Nenhuma ação necessária.');
-          // Cria uma instância do modelo do documento com os dados a serem inseridos
-          const words = new Words({
-          words: url,
-          title: title,
-          search_word: search_word,
-          content: content,
-          description: description,
-          date_created: new Date(),
-          date_audit: null
-          // Outros campos, se necessário
-          });
-      }
+//INSERIR UMA NOVA PALAVRA
 
-  })
-  .catch((error) => {
-      console.error('Erro ao adicionar o documento:', error);
-  });
+// Função assíncrona para executar a operação
+async function addWord(new_word) {
+  const Words = mongoose.model('Words', wordsSchema);
+
+  // ID do documento que queremos atualizar
+  const documentID = '6670d8dcde7b4b99e1bd8c05';
+
+  // Novo hobby a ser adicionado ao array
+  // const new_word = 'DEFECO';
+  // const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+  try {
+    // Atualize o documento adicionando um novo hobby ao array
+    const resposta = await Words.updateOne(
+      { _id: new mongoose.Types.ObjectId(documentID) },
+      { $push: { words: new_word } } // Use $addToSet para garantir que o hobby seja único
+    );
+    
+    console.log(`Documentos modificados: ${resposta.modifiedCount}`);
+  } catch (err) {
+    console.error(err);
+  } 
+}
+// let new_word= "SABUGOSUPREMO"
+// addWord(new_word)
+
+
+
+// DELETAR PALAVRA
+// Função para remover uma palavra específica do array
+async function removeWord(wordToRemove) {
+  const Words = mongoose.model('Words', wordsSchema);
+
+  // ID do documento que queremos atualizar
+  const documentID = '6670d8dcde7b4b99e1bd8c05';
+
+  // Palavra a ser removida do array
+  // const wordToRemove = 'DEFECO';
+
+  try {
+    // Atualize o documento removendo a palavra específica do array
+    const resposta = await Words.updateOne(
+      { _id: new mongoose.Types.ObjectId(documentID) },
+      { $pull: { words: wordToRemove } }
+    );
+
+    console.log(`Documentos modificados: ${resposta.modifiedCount}`);
+  } catch (err) {
+    console.error(err);
+  } 
 }
 
+// const wordToRemove = 'SABUGOSUPREMO'
+// removeWord(wordToRemove)
 
+// ALTERAR UMA PALAVRA
+// Função para alterar uma palavra específica no array
+async function updateWord(palavraAntiga, palavraNova) {
+  const Words = mongoose.model('Words', wordsSchema);
+  const documentID = '6670d8dcde7b4b99e1bd8c05'
+  try {
+    // Encontre o documento
+    const documento = await Words.findById(documentID);
 
+    if (documento) {
+      // Encontre o índice da palavra antiga
+      const indice = documento.words.indexOf(palavraAntiga);
+      if (indice !== -1) {
+        // Altere a palavra antiga pela nova
+        documento.words[indice] = palavraNova;
 
+        // Salve o documento atualizado
+        await documento.save();
+        console.log(`Palavra alterada com sucesso de ${palavraAntiga} para ${palavraNova}`);
+      } else {
+        console.log(`Palavra "${palavraAntiga}" não encontrada no documento`);
+      }
+    } else {
+      console.log(`Documento com ID ${documentID} não encontrado`);
+    }
+  } catch (err) {
+    console.error(err);
+  }
+}
 
-// function read_mongo(url){
-//     // Define o modelo do documento
-//     const News = mongoose.model('News', newsSchema);    
-//     News.findOne({ url: url })
-//     .then((news) => {
-//         if (news) {
-//         console.log('Documento encontrado:', news);
-//         return news;
-//         // Faça o que for necessário com o documento retornado
-//         } else {
-//         console.log('Documento não encontrado.');
-//         }
-//     })
-//     .catch((error) => {
-//         console.error('Erro ao encontrar o documento:', error);
-//     });
-// }
+// alterarPalavra("DEFECO", "DEFECO VIRO SABUGO FODASE")
+
 
 //retorna todos os documentos
 async function read_all_mongo() {
@@ -235,24 +278,7 @@ async function read_all_mongo() {
       throw error;
     }
   }
-// function read_all_mongo(){
-//     // Define o modelo do documento
-//     const News = mongoose.model('News', newsSchema);
 
-//     // Obtém todos os documentos da coleção
-//     News.find()
-//         .then((tasks) => {
-//             if (tasks.length > 0) {
-//                 console.log('Documentos encontrados:', tasks);
-//                 // Faça o que for necessário com os documentos retornados
-//             } else {
-//                 console.log('Nenhum documento encontrado.');
-//             }
-//         })
-//         .catch((error) => {
-//             console.error('Erro ao encontrar os documentos:', error);
-//         });
-// }
 
 //obtem as noticiais com base em uma palavra chave
 async function get_news(search_word) {
@@ -385,6 +411,6 @@ const stopWords = [
 
 
 
-module.exports = { read_all_mongo, read_mongo, get_clean_concatenated_text_by_search_word, read_words_to_search };
+module.exports = { read_all_mongo, read_mongo, get_clean_concatenated_text_by_search_word, readWord };
 
 // get_clean_concatenated_text_by_search_word('python')
