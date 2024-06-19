@@ -11,6 +11,7 @@ function App() {
     <section className="App">
       <Nav />
       <div className='Content'>
+        <WordCloud />
       </div>
     </section>
   );

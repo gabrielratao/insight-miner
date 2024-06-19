@@ -3,53 +3,83 @@ import React, { useState } from 'react';
 import { TagCloud } from 'react-tagcloud';
 import Engload from '../Loading/Loading'
 
+//Cria a nuvem de palavras
 const WordCloud = () => {
     const [chave, setChave] = useState('');
     const [valores, setValores] = useState([]);
-
-    const data = {
-        'coca': ['refrigerante', 'mal a saúde', 'açucar', 'gás', 'bebida', 'cola', 'energético', 'doce', 'desidratação', 'sede'],
-        'cesusc': ['faculdade', 'ads', 'back-end', 'ibsem', 'graduação', 'curso', 'tecnologia', 'ensino', 'aprendizado', 'conhecimento'],
-        'ads': ['tecnologia', 'sistemas', 'curso', 'programação', 'desenvolvimento', 'web', 'mobile', 'frontend', 'backend', 'software'],
-        'react': ['biblioteca', 'componentes', 'estado', 'props', 'componentização', 'interface', 'renderização', 'ciclo de vida', 'hooks', 'fluxo de dados'],
-        'javascript': ['linguagem', 'frontend', 'backend', 'web', 'programação', 'html', 'css', 'nodejs', 'ecmascript', 'framework'],
-        'desenvolvimento': ['software', 'aplicativos', 'web', 'mobile', 'código', 'engenharia', 'projeto', 'equipe', 'metodologias', 'agile'],
-        'esporte': ['futebol', 'basquete', 'vôlei', 'natação', 'atletismo', 'ginástica', 'tênis', 'handebol', 'boxe', 'ciclismo', 'judô', 'surf', 'skate', 'corrida', 'musculação', 'pilates', 'yoga', 'pilates', 'capoeira', 'karatê'],
-        'comida': ['pizza', 'hamburguer', 'sushi', 'churrasco', 'massas', 'saladas', 'sobremesas', 'vegetariana', 'vegana', 'fast-food', 'gourmet', 'saudável', 'restaurantes', 'chef', 'cozinha', 'receitas', 'ingredientes', 'carnes', 'peixes', 'frutas'],
-        'viagem': ['turismo', 'destinos', 'aventura', 'praia', 'montanha', 'cidade', 'intercâmbio', 'mochilão', 'hostel', 'hotel', 'passagens', 'voos', 'bagagem', 'reserva', 'roteiro', 'câmbio', 'seguro viagem', 'cultura', 'passeios', 'guias'],
-    };
+    const [Loading, setLoading] = useState(false);
+    const MaxWords = 60;
+ 
 
     const handleInputChange = (event) => {
         setChave(event.target.value);
     };
 
+    //Gatilho para pesquisar palavra chave
     const handleSearchButtonClick = () => {
-        if (data[chave]) {
-          setValores(data[chave]);
-        } else {
-          alert('Chave não encontrada');
-          setValores([]); // Limpa os valores exibidos
-        }
-      };
+        setLoading(true);
+        fetch(`http://localhost:5000/api/words/cloud/?search_word=${encodeURIComponent(chave)}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Não foi possível carregar os dados.');
+                }
+                return response.text();
+            })
+            .then(data => {
+                console.log("dados recebidos:", data)
+                if (data) {
+        
+                    //Formata a string em um array
+                    const wordsArray = data.split(' ');
+                    //Limita o numero de palavras na nuvem
+                    const limitedWordsinCloud =  wordsArray.slice(0, MaxWords);
+                    //Mapeia as palavras 
+                    const formattedValues = limitedWordsinCloud.map((word, index) => ({ key: `${valores}-${index}`,value: word, count: 1}));
+                    setValores(formattedValues); // Define os valores recebidos da API
+                } else {
+                    setValores([]); // Limpa os valores exibidos
+                    alert('Nenhum resultado encontrado.');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao buscar dados:', error);
+                alert('Ocorreu um erro ao buscar os dados.');
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    };
 
-      return (
+    return (
         <div className='wordcloud-section'>
             <h2>Digite uma palavra chave</h2>
             <div className='searchbox'>
         
                 <input className='search-input'
-                placeholder='ex javascript' value={chave}
-                onChange={handleInputChange} type='text'/>
-                <button className='btn-search'
-                onClick={handleSearchButtonClick}>Pesquisar</button>
-            </div>
-
-            <div className='wordcloud-box'>
-                <TagCloud 
-                    minSize={6}
-                    maxSize={35}
-                    tags={valores.map((valor) => ({value: valor}))}
+                placeholder='ex javascript' 
+                value={chave}
+                onChange={handleInputChange} 
+                type='text'
                 />
+
+                <button 
+                className='btn-search'
+                onClick={handleSearchButtonClick}>
+                    Pesquisar
+                </button>
+            </div>
+         
+            <div className='wordcloud-box'>
+                {Loading ? (
+                        <Engload /> // Mostra o componente de loading enquanto os dados são carregados
+                    ) : (
+                        <TagCloud 
+                            minSize={6}
+                            maxSize={35}
+                            tags={valores}
+                            styleOption={customCloud}
+                        />
+                    )}
             </div>
         </div>
     )
