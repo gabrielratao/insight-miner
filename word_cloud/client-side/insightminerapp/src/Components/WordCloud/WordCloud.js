@@ -3,6 +3,26 @@ import React, { useState } from 'react';
 import { TagCloud } from 'react-tagcloud';
 import Engload from '../Loading/Loading'
 
+//Customiza a aparencia da nuvem
+const customRenderer = (tag, size, color) => (
+    <span
+      key={tag.value}
+      style={{
+        animation: 'blinker 5s linear infinite',
+        animationDelay: `${Math.random() * 2}s`,
+        fontSize: `${size / 12}em`,
+        
+        //border: `2px solid ${color}`,
+        margin: '2px',
+        padding: '2px',
+        display: 'inline-block',
+        color: `${color}`,
+      }}
+    >
+      {tag.value}
+    </span>
+)
+
 //Cria a nuvem de palavras
 const WordCloud = () => {
     const [chave, setChave] = useState('');
@@ -10,7 +30,7 @@ const WordCloud = () => {
     const [Loading, setLoading] = useState(false);
     const MaxWords = 60;
  
-
+    //Estado para guardar o valor do input
     const handleInputChange = (event) => {
         setChave(event.target.value);
     };
@@ -26,15 +46,15 @@ const WordCloud = () => {
                 return response.text();
             })
             .then(data => {
-                console.log("dados recebidos:", data)
+                //console.log("dados recebidos:", data)
                 if (data) {
         
-                    //Formata a string em um array
+                    //Formata os dados recebidos em um array
                     const wordsArray = data.split(' ');
                     //Limita o numero de palavras na nuvem
-                    const limitedWordsinCloud =  wordsArray.slice(0, MaxWords);
-                    //Mapeia as palavras 
-                    const formattedValues = limitedWordsinCloud.map((word, index) => ({ key: `${valores}-${index}`,value: word, count: 1}));
+                    const limitedWordsinCloud =  wordsArray.slice(10, MaxWords);
+                    //Mapeia as palavras para popular a nuvem
+                    const formattedValues = limitedWordsinCloud.map((word, index) => ({ key: `${valores}-${index}`,value: word, count: Math.floor(Math.random() * 50) + 1}));
                     setValores(formattedValues); // Define os valores recebidos da API
                 } else {
                     setValores([]); // Limpa os valores exibidos
@@ -43,7 +63,7 @@ const WordCloud = () => {
             })
             .catch(error => {
                 console.error('Erro ao buscar dados:', error);
-                alert('Ocorreu um erro ao buscar os dados.');
+                alert('Ocorreu um erro ao buscar os dados.', error);
             })
             .finally(() => {
                 setLoading(false);
@@ -74,10 +94,10 @@ const WordCloud = () => {
                         <Engload /> // Mostra o componente de loading enquanto os dados são carregados
                     ) : (
                         <TagCloud 
-                            minSize={6}
-                            maxSize={35}
+                            minSize={12}
+                            maxSize={28}
                             tags={valores}
-                            styleOption={customCloud}
+                            renderer={customRenderer}
                         />
                     )}
             </div>
