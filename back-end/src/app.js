@@ -27,7 +27,7 @@ const config = {
 
 //fazendo a conexão global  (global.   => variável global -> )
 sql.connect(config) 
-	.then(conn => global.conn = conn) //se der certo criar essa variável coma conexão  (retorno do connect)
+	.then(conn => global.conn = conn) //se der certo criar essa variável com a conexão  (retorno do connect)
 	.catch(err => console.log(err))
 
 function execSQLQuery(sqlQry, res){
