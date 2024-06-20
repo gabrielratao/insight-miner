@@ -1,11 +1,15 @@
+@keyframes blinker {
+    50% { opacity: 0.0; }
+  }
+
 .wordcloud-section {
     /*border: 1px solid green;*/
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 20px;
-    padding: 50px;
+    margin: 25px;
+    padding: 25px;
     color:#F4F9E9;
 }
 
@@ -20,9 +24,9 @@
 }
 
 .wordcloud-box{
-    border: 1px solid red;
+    /*border: 1px solid red;*/
     padding: 15px;
-    width: 45%;
+    width: 70%;
     display: flex;
     justify-content: center;
     align-items: center;
