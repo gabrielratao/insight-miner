@@ -3,10 +3,15 @@ const bodyParser = require('body-parser');
 const cors = require('cors')
 
 //importando funções de conexão com o banco
-const { read_all_mongo } = require('../get_news.js');
-const { read_mongo } = require('../get_news.js');
-const { get_clean_concatenated_text_by_search_word } = require('../get_news.js');
-const { read_words_to_search } = require('../get_news.js');
+// const { read_all_mongo } = require('../get_news.js');
+// const { read_mongo } = require('../get_news.js');
+// const { get_clean_concatenated_text_by_search_word } = require('../get_news.js');
+const { readWord } = require('../get_news.js');
+const { addWord } = require('../get_news.js');
+const { removeWord } = require('../get_news.js');
+const { updateWord } = require('../get_news.js');
+
+
 
 // const app = express();    
 // app.use(cors())     
@@ -20,20 +25,46 @@ router.get('/sabugo', (req, res) => {
     res.send('API OK')
 })
 
+//ler todas as palavras chaves
 router.get('/words', async (req, res) => {
-    let list_words = await read_words_to_search()
+    let list_words = await readWord()
     res.json({'words_search': list_words})
 })
 
 //adicionar nova palavra
-router.put('/words', (req, res) => {
+router.put('/words', async (req, res) => {
     
     const word_to_add = req.body.word_to_add
-    console.log(word_to_add)
+    const response = await addWord(word_to_add)
+    // console.log(word_to_add)
 
-    res.send('ok')
-
+    res.send(response)
 
 })
+
+//remover palavra
+router.delete('/words', async (req, res) => {
+    
+    const word_to_remove = req.body.word_to_remove
+    const response = await removeWord(word_to_remove)
+    // console.log(word_to_add)
+
+    res.send(response)
+
+})
+
+//alterar palavra
+router.patch('/words', async (req, res) => {
+    
+    
+    const word_before = req.body.word_before
+    const word_after = req.body.word_after
+    const response = await updateWord(word_before, word_after)
+    // console.log(word_to_add)
+
+    res.send(response)
+
+})
+
 
 module.exports = router;

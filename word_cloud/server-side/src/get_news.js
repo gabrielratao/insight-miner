@@ -148,8 +148,10 @@ async function read_mongo(url) {
   }
 
 
+
+// CRUD DAS PALAVRAS A SERES PESQUISADA
 //le o documento especifico que contem uma lista de palavras a serem pesquisadas na API de noticias
-async function read_words_to_search() {
+async function readWord() {
   const id_document = '6670d8dcde7b4b99e1bd8c05'
   // Define o modelo do documento
   const Words = mongoose.model('Words', wordsSchema);
@@ -168,54 +170,165 @@ async function read_words_to_search() {
   }
 }
 
-//Essa função adiciona um novo documento verificando se ele ja existe com base na URL da noticia
-function update_mongo(word) {
-  const id_document = '6670d8dcde7b4b99e1bd8c05'
-  // Verifica se um documento com a URL especificada já existe
-  Words.findOne({ _id: id_document })
-  .then((existingDocument) => {
-      if (existingDocument) {
-          console.log('Documento com a URL especificada já existe. Nenhuma ação necessária.');
-          // Cria uma instância do modelo do documento com os dados a serem inseridos
-          const words = new Words({
-          words: url,
-          title: title,
-          search_word: search_word,
-          content: content,
-          description: description,
-          date_created: new Date(),
-          date_audit: null
-          // Outros campos, se necessário
-          });
-      }
+//INSERIR UMA NOVA PALAVRA
+async function addWord(new_word) {
+  const Words = mongoose.model('Words', wordsSchema);
 
-  })
-  .catch((error) => {
-      console.error('Erro ao adicionar o documento:', error);
-  });
+  // ID do documento que queremos atualizar
+  const documentID = '6670d8dcde7b4b99e1bd8c05';
+
+  try {
+    // Encontre o documento
+    const documento = await Words.findById(documentID);
+
+    if (!documento) {
+      return {
+        status: 'failure',
+        message: `Documento com ID ${documentID} não encontrado`
+      };
+    }
+
+    // Verifique se a palavra já existe no array
+    if (documento.words.includes(new_word)) {
+      return {
+        status: 'failure',
+        message: `A palavra "${new_word}" já existe no documento`
+      };
+    }
+
+    // Adicione a nova palavra ao array
+    documento.words.push(new_word);
+    await documento.save();
+
+    return {
+      status: 'success',
+      message: 'Palavra adicionada com sucesso.'
+    };
+  } catch (err) {
+    console.error(err);
+    return {
+      status: 'error',
+      message: 'Ocorreu um erro ao adicionar a palavra.',
+      error: err.message
+    };
+  }
+}
+// let new_word= "SABUGOSUPREMO"
+// addWord(new_word)
+
+
+
+// DELETAR PALAVRA
+// Função para remover uma palavra específica do array
+async function removeWord(wordToRemove) {
+  const Words = mongoose.model('Words', wordsSchema);
+
+  // ID do documento que queremos atualizar
+  const documentID = '6670d8dcde7b4b99e1bd8c05';
+
+  try {
+    // Encontre o documento
+    const documento = await Words.findById(documentID);
+
+    if (!documento) {
+      return {
+        status: 'failure',
+        message: `Documento com ID ${documentID} não encontrado`
+      };
+    }
+
+    // Verifique se a palavra existe no array
+    if (!documento.words.includes(wordToRemove)) {
+      return {
+        status: 'failure',
+        message: `A palavra "${wordToRemove}" não existe no documento`
+      };
+    }
+
+    // Remova a palavra do array
+    documento.words.pull(wordToRemove);
+    await documento.save();
+
+    return {
+      status: 'success',
+      message: 'Palavra removida com sucesso.'
+    };
+  } catch (err) {
+    console.error(err);
+    return {
+      status: 'error',
+      message: 'Ocorreu um erro ao remover a palavra.',
+      error: err.message
+    };
+  }
 }
 
+// const wordToRemove = 'SABUGOSUPREMO'
+// removeWord(wordToRemove)
 
+// ALTERAR UMA PALAVRA
+// Função para alterar uma palavra específica no array
+async function updateWord(palavraAntiga, palavraNova) {
+  const Words = mongoose.model('Words', wordsSchema);
+  const documentID = '6670d8dcde7b4b99e1bd8c05';
 
+  try {
+    // Encontre o documento
+    const documento = await Words.findById(documentID);
 
+    if (documento) {
+      // Verifique se a palavra antiga existe no array
+      if (!documento.words.includes(palavraAntiga)) {
+        return {
+          status: 'failure',
+          message: `Palavra "${palavraAntiga}" não encontrada no documento`
+        };
+      }
 
-// function read_mongo(url){
-//     // Define o modelo do documento
-//     const News = mongoose.model('News', newsSchema);    
-//     News.findOne({ url: url })
-//     .then((news) => {
-//         if (news) {
-//         console.log('Documento encontrado:', news);
-//         return news;
-//         // Faça o que for necessário com o documento retornado
-//         } else {
-//         console.log('Documento não encontrado.');
-//         }
-//     })
-//     .catch((error) => {
-//         console.error('Erro ao encontrar o documento:', error);
-//     });
-// }
+      // Verifique se a nova palavra já existe no array
+      if (documento.words.includes(palavraNova)) {
+        return {
+          status: 'failure',
+          message: `A palavra "${palavraNova}" já existe no documento`
+        };
+      }
+
+      // Encontre o índice da palavra antiga
+      const indice = documento.words.indexOf(palavraAntiga);
+      if (indice !== -1) {
+        // Altere a palavra antiga pela nova
+        documento.words[indice] = palavraNova;
+
+        // Salve o documento atualizado
+        await documento.save();
+        return {
+          status: 'success',
+          message: `Palavra alterada com sucesso de ${palavraAntiga} para ${palavraNova}`
+        };
+      } else {
+        return {
+          status: 'failure',
+          message: `Palavra "${palavraAntiga}" não encontrada no documento`
+        };
+      }
+    } else {
+      return {
+        status: 'failure',
+        message: `Documento com ID ${documentID} não encontrado`
+      };
+    }
+  } catch (err) {
+    console.error(err);
+    return {
+      status: 'error',
+      message: 'Ocorreu um erro ao atualizar a palavra.',
+      error: err.message
+    };
+  }
+}
+
+// alterarPalavra("DEFECO", "DEFECO VIRO SABUGO FODASE")
+
 
 //retorna todos os documentos
 async function read_all_mongo() {
@@ -235,24 +348,7 @@ async function read_all_mongo() {
       throw error;
     }
   }
-// function read_all_mongo(){
-//     // Define o modelo do documento
-//     const News = mongoose.model('News', newsSchema);
 
-//     // Obtém todos os documentos da coleção
-//     News.find()
-//         .then((tasks) => {
-//             if (tasks.length > 0) {
-//                 console.log('Documentos encontrados:', tasks);
-//                 // Faça o que for necessário com os documentos retornados
-//             } else {
-//                 console.log('Nenhum documento encontrado.');
-//             }
-//         })
-//         .catch((error) => {
-//             console.error('Erro ao encontrar os documentos:', error);
-//         });
-// }
 
 //obtem as noticiais com base em uma palavra chave
 async function get_news(search_word) {
@@ -317,15 +413,15 @@ const stopWords = [
     "during", "each", "few", "for", "from", "further", "had", "hadn't", "has", "hasn't", "have", "haven't", 
     "having", "he", "he'd", "he'll", "he's", "her", "here", "here's", "hers", "herself", "him", "himself", 
     "his", "how", "how's", "i", "i'd", "i'll", "i'm", "i've", "if", "in", "into", "is", "isn't", "it", "it's",
-     "its", "itself", "let's", "me", "more", "most", "mustn't", "my", "myself", "no", "nor", "not", "of", 
-     "off", "on", "once", "only", "or", "other", "ought", "our", "ours", "ourselves", "out", "over", "own",
-      "same", "shan't", "she", "she'd", "she'll", "she's", "should", "shouldn't", "so", "some", "such", 
-      "than", "that", "that's", "the", "their", "theirs", "them", "themselves", "then", "there", "there's",
-       "these", "they", "they'd", "they'll", "they're", "they've", "this", "those", "through", "to", "too",
-        "under", "until", "up", "very", "was", "wasn't", "we", "we'd", "we'll", "we're", "we've", "were", 
-        "weren't", "what", "what's", "when", "when's", "where", "where's", "which", "while", "who", "who's",
-         "whom", "why", "why's", "with", "won't", "would", "wouldn't", "you", "you'd", "you'll", "you're", 
-         "you've", "your", "yours", "yourself", "yourselves"
+    "its", "itself", "let's", "me", "more", "most", "mustn't", "my", "myself", "no", "nor", "not", "of", 
+    "off", "on", "once", "only", "or", "other", "ought", "our", "ours", "ourselves", "out", "over", "own",
+    "same", "shan't", "she", "she'd", "she'll", "she's", "should", "shouldn't", "so", "some", "such", 
+    "than", "that", "that's", "the", "their", "theirs", "them", "themselves", "then", "there", "there's",
+    "these", "they", "they'd", "they'll", "they're", "they've", "this", "those", "through", "to", "too",
+    "under", "until", "up", "very", "was", "wasn't", "we", "we'd", "we'll", "we're", "we've", "were", 
+    "weren't", "what", "what's", "when", "when's", "where", "where's", "which", "while", "who", "who's",
+    "whom", "why", "why's", "with", "won't", "would", "wouldn't", "you", "you'd", "you'll", "you're", 
+    "you've", "your", "yours", "yourself", "yourselves", "x", "ha"
   ];
   
   async function get_clean_concatenated_text_by_search_word(search_word) {
@@ -385,6 +481,14 @@ const stopWords = [
 
 
 
-module.exports = { read_all_mongo, read_mongo, get_clean_concatenated_text_by_search_word, read_words_to_search };
+module.exports = { 
+  read_all_mongo,
+  read_mongo, 
+  get_clean_concatenated_text_by_search_word, 
+  readWord,
+  addWord,
+  removeWord,
+  updateWord
+};
 
 // get_clean_concatenated_text_by_search_word('python')
