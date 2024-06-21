@@ -5,19 +5,6 @@ export default function Engload() {
     return(
         <div className="loading">
         <img src={eng} className="App-logo" />
-        
-        <div className='section-loading'>
-            {/*<a
-            className="App-link"
-            href="https://github.com/gabrielratao/insight-miner"
-            target="_blank"
-            rel="noopener noreferrer"
-            >
-            About Project
-             </a>
-             <p>Minerando ideias</p>
-             */}
-        </div>
       </div>
     )
 };

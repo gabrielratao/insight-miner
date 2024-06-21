@@ -8,10 +8,9 @@ const customRenderer = (tag, size, color) => (
     <span
       key={tag.value}
       style={{
-        animation: 'blinker 5s linear infinite',
+        animation: 'blinker 8s linear infinite',
         animationDelay: `${Math.random() * 2}s`,
         fontSize: `${size / 12}em`,
-        
         //border: `2px solid ${color}`,
         margin: '2px',
         padding: '2px',
@@ -90,6 +89,7 @@ const WordCloud = () => {
             </div>
          
             <div className='wordcloud-box'>
+               
                 {Loading ? (
                         <Engload /> // Mostra o componente de loading enquanto os dados são carregados
                     ) : (

@@ -1,24 +1,30 @@
-import react from 'react';
 import './NavBar.css'
-import logo from '../SVG/logo.svg'
+import React, { useState } from 'react'
+import WordCloud from '../WordCloud/WordCloud';
+import AuditData from '../Audit/Audit';
 
+export default function Navigator () {
+    const [selectedComponent, setSelectedComponent] = useState(null);
 
+    const renderComponent = () => {
+        switch (selectedComponent) {
+            case 'wordCloud':
+                return <WordCloud />;
+            case 'auditData':
+                return <AuditData />;
+        }
+    }
 
-export default function Nav() {
-    
     return (
-        <header className="headNav">
-            <div className='iconNav'>
-                <img src={logo} className='logoNav'/>
-                <h2>InsightMiner</h2>
+        <section className='content'>
+            <div className='navigator'>
+                <button onClick={() => setSelectedComponent('wordCloud')} className='btn-navigator'>WordCloud</button>
+                <button onClick={() => setSelectedComponent('auditData')} className='btn-navigator'>Audit Data</button>
             </div>
-            <nav className='navBar'>
-                <a className=''></a>
-                <a href='' className='aNav'>Contact</a>
-                <a href='https://github.com/gabrielratao/insight-miner/blob/main/README.md' 
-                target='blanke'
-                className='aNav'>About</a>
-            </nav>
-        </header>
+            <div className='mainContent'>
+                {renderComponent()}
+            </div>
+        </section>
+        
     )
 }

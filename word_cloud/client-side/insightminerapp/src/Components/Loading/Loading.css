@@ -10,7 +10,7 @@
   }
   
   .loading {
-    min-height: 82vh;
+    min-height: 40vh;
     max-height: auto;
     display: flex;
     flex-direction: column;
