@@ -3,9 +3,11 @@ import React, { useState } from 'react'
 import WordCloud from '../WordCloud/WordCloud';
 import AuditData from '../Audit/Audit';
 
+//Cria componente para navegar entre os componentes principais
 export default function Navigator () {
     const [selectedComponent, setSelectedComponent] = useState(null);
 
+    //Switch para alternar entre os comps
     const renderComponent = () => {
         switch (selectedComponent) {
             case 'wordCloud':
