@@ -1,18 +1,15 @@
 import './App.css';
-import eng from './Components/SVG/eng.svg'
-import Nav from './Components/NavBar/NavBar';
-import Loading from './Components/Loading/Loading';
-import WordCloud from './Components/WordCloud/WordCloud';
-import AuditData from './Components/Audit/Audit';
+import Header from './Components/Header/Header';
+//import WordCloud from './Components/WordCloud/WordCloud';
+//import AuditButton from './Components/Audit/callAudit';
+import Navigator from './Components/NavBar/NavBar';
 
 
 function App() {
   return (
     <section className="App">
-      <Nav />
-      <div className='Content'>
-        <WordCloud />
-      </div>
+      <Header />
+      <Navigator />
     </section>
   );
 }

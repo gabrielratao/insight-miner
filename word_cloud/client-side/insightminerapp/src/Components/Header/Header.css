@@ -1,0 +1,24 @@
+.headNav {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--white);
+    color: var(--blue);
+}
+
+.iconNav {
+    display: flex;
+    align-items: center;
+    font-family: "Josefin Sans", sans-serif;
+}
+
+.logoNav {
+    width: 100px;
+}
+
+.aNav{
+    margin: 30px;
+    color: #153243;
+    text-decoration: none;
+}
