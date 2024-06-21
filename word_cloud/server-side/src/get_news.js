@@ -121,6 +121,7 @@ function update_mongo(url, title, search_word, content, description) {
     .then((result) => {
         if (result) {
             console.log('Novo documento adicionado com sucesso!');
+            
         }
     })
     .catch((error) => {
@@ -158,7 +159,7 @@ async function readWord() {
   try {
     const words = await Words.findOne({ _id: id_document });
     if (words.words) {
-      console.log('Palavras de pesquisa', words);
+      // console.log('Palavras de pesquisa', words);
       return words.words;
     } else {
       console.log('Documento não encontrado.');
@@ -401,7 +402,7 @@ function extract_info_news(data, search_word){
         console.log(i)
         i = i + 1
     });
-    console.log('Não há mais noticias')
+    console.log('Não há mais noticias')    
 }
 
 
@@ -488,7 +489,10 @@ module.exports = {
   readWord,
   addWord,
   removeWord,
-  updateWord
+  updateWord,
+  get_news,
+  extract_info_news,
+  update_mongo
 };
 
 // get_clean_concatenated_text_by_search_word('python')
