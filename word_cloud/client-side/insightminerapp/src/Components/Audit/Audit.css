@@ -1,20 +1,38 @@
 .audit-section{
-    padding: 50px;
+    padding: 25px;
+    margin: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    color: var(--white);
 }
 
 .box-audit{
     /*border: 1px solid red;*/
-    padding: 20px;
+    padding: 15px;
     display: flex;
     column-gap: 10px;
-
+ 
 }
 
+.newWord{
+    text-align: center;
+    color: var(--blue);
+    border-radius: 5px;
+    background-color: var(--white);
+    padding: 20px;
+}
 
+.newWord-content {
+    display: flex;
+}
+
+.box-createWord{
+    display: flex;
+    flex-direction: column;
+
+}
 
 .tableContent {
     /*border: 1px solid yellow;*/
