@@ -16,16 +16,19 @@
  
 }
 
-.newWord{
+.modal{
     text-align: center;
     color: var(--blue);
     border-radius: 5px;
     background-color: var(--white);
     padding: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
-.newWord-content {
+.modal-content {
     display: flex;
+    flex-direction: row;
 }
 
 .box-createWord{
