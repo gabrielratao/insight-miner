@@ -15,9 +15,9 @@ const data_base = 'api_news' //nome do banco de dados
 
 // console.log(uri)
 // Conecta ao mongoDB utilizando o mongoose
-// mongoose.connect(uri+data_base)
-//     .then(() => console.log('Conexão com MongoDB bem sucedida'))
-//     .catch(err => console.error('Erro na conexão com banco :(', err));
+mongoose.connect(uri+data_base)
+    .then(() => console.log('Conexão com MongoDB bem sucedida'))
+    .catch(err => console.error('Erro na conexão com banco :(', err));
 
 // Define o esquema do documento
 const newsSchema = new mongoose.Schema({
