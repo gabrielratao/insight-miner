@@ -21,7 +21,7 @@ export default function Navigator () {
         <section className='content'>
             <div className='navigator'>
                 <button onClick={() => setSelectedComponent('wordCloud')} className='btn-navigator'>WordCloud</button>
-                <button onClick={() => setSelectedComponent('auditData')} className='btn-navigator'>Audit Data</button>
+                <button onClick={() => setSelectedComponent('auditData')} className='btn-navigator'>Auditar dados</button>
             </div>
             <div className='mainContent'>
                 {renderComponent()}

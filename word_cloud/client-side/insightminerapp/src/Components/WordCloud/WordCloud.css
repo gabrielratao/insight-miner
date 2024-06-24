@@ -33,3 +33,13 @@
     text-align: center;
 
 }
+
+.btn-search {
+    padding-top: 6px;
+    padding-bottom: 2px;
+}
+
+img {
+    padding: 0;
+    margin: 0;
+}
