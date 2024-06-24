@@ -15,28 +15,28 @@ const router = express.Router();
 // const port = 3000; //porta padrão
 
 //teste
-router.get('/teste', (req, res) => {
-    res.send('API OK')
-})
+// router.get('/teste', (req, res) => {
+//     res.send('API OK')
+// })
 
-router.get('/news/url', async (req, res) => {
-    const url = req.query.url;
-    // const url = 'https://aljamal.substack.com/p/homoiconic-python'
-    if (!url) {
-      return res.status(400).send('URL não fornecida');
-    }
+// router.get('/news/url', async (req, res) => {
+//     const url = req.query.url;
+//     // const url = 'https://aljamal.substack.com/p/homoiconic-python'
+//     if (!url) {
+//       return res.status(400).send('URL não fornecida');
+//     }
   
-    try {
-      const news = await read_mongo(url);
-      if (news) {
-        res.json(news);
-      } else {
-        res.status(404).send('Documento não encontrado');
-      }
-    } catch (error) {
-      res.status(500).send('Erro ao encontrar o documento: ' + error.message);
-    }
-  });
+//     try {
+//       const news = await read_mongo(url);
+//       if (news) {
+//         res.json(news);
+//       } else {
+//         res.status(404).send('Documento não encontrado');
+//       }
+//     } catch (error) {
+//       res.status(500).send('Erro ao encontrar o documento: ' + error.message);
+//     }
+//   });
 
 router.get('/news', async (req, res) => {
     try {

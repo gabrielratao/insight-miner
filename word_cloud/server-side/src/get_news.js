@@ -15,9 +15,9 @@ const data_base = 'api_news' //nome do banco de dados
 
 // console.log(uri)
 // Conecta ao mongoDB utilizando o mongoose
-mongoose.connect(uri+data_base)
-    .then(() => console.log('Conexão com MongoDB bem sucedida'))
-    .catch(err => console.error('Erro na conexão com banco :(', err));
+// mongoose.connect(uri+data_base)
+//     .then(() => console.log('Conexão com MongoDB bem sucedida'))
+//     .catch(err => console.error('Erro na conexão com banco :(', err));
 
 // Define o esquema do documento
 const newsSchema = new mongoose.Schema({
@@ -94,59 +94,63 @@ const Words = mongoose.model('Words', wordsSchema);
 
 
 //Essa função adiciona um novo documento verificando se ele ja existe com base na URL da noticia
-function update_mongo(url, title, search_word, content, description) {
-    // Verifica se um documento com a URL especificada já existe
-    News.findOne({ url: url })
-    .then((existingDocument) => {
-        if (existingDocument) {
-            console.log('Documento com a URL especificada já existe. Nenhuma ação necessária.');
-            return;
-        }
+function update_mongo(url, title, search_word, content, description, callback) {
+  // Verifica se um documento com a URL especificada já existe
+  News.findOne({ url: url })
+  .then((existingDocument) => {
+      if (existingDocument) {
+          // console.log('Documento com a URL especificada já existe. Nenhuma ação necessária.');
+          callback(null, 'documento existente');
+          return;
+      }
 
-        // Cria uma instância do modelo do documento com os dados a serem inseridos
-        const news = new News({
-            url: url,
-            title: title,
-            search_word: search_word,
-            content: content,
-            description: description,
-            date_created: new Date(),
-            date_audit: null
-            // Outros campos, se necessário
-        });
+      // Cria uma instância do modelo do documento com os dados a serem inseridos
+      const news = new News({
+          url: url,
+          title: title,
+          search_word: search_word,
+          content: content,
+          description: description,
+          date_created: new Date(),
+          date_audit: null
+          // Outros campos, se necessário
+      });
 
-        // Salva o novo documento no banco de dados
-        return news.save();
-    })
-    .then((result) => {
-        if (result) {
-            console.log('Novo documento adicionado com sucesso!');
-            
-        }
-    })
-    .catch((error) => {
-        console.error('Erro ao adicionar o documento:', error);
-    });
+      // Salva o novo documento no banco de dados
+      news.save()
+      .then((result) => {
+          // console.log('Novo documento adicionado com sucesso!');
+          callback(null, 'documento salvo');
+      })
+      .catch((error) => {
+          // console.error('Erro ao salvar o documento:', error);
+          callback(error, null);
+      });
+  })
+  .catch((error) => {
+      // console.error('Erro ao encontrar o documento:', error);
+      callback(error, null);
+  });
 }
 
 //le um documento atraves da URL
-async function read_mongo(url) {
-    // Define o modelo do documento
-    const News = mongoose.model('News', newsSchema);
-    try {
-      const news = await News.findOne({ url: url });
-      if (news) {
-        console.log('Documento encontrado:', news);
-        return news;
-      } else {
-        console.log('Documento não encontrado.');
-        return null;
-      }
-    } catch (error) {
-      console.error('Erro ao encontrar o documento:', error);
-      throw error;
-    }
-  }
+// async function read_mongo(url) {
+//     // Define o modelo do documento
+//     const News = mongoose.model('News', newsSchema);
+//     try {
+//       const news = await News.findOne({ url: url });
+//       if (news) {
+//         console.log('Documento encontrado:', news);
+//         return { success: true, message: 'Documento encontrado', news: news };
+//       } else {
+//         console.log('Documento não encontrado.');
+//         return { success: false, message: 'Documento não encontrado' };
+//       }
+//     } catch (error) {
+//       console.error('Erro ao encontrar o documento:', error);
+//       throw error;
+//     }
+//   }
 
 
 
@@ -171,9 +175,11 @@ async function readWord() {
   }
 }
 
+
+
 //INSERIR UMA NOVA PALAVRA
 async function addWord(new_word) {
-  const Words = mongoose.model('Words', wordsSchema);
+  // const Words = mongoose.model('Words', wordsSchema);
 
   // ID do documento que queremos atualizar
   const documentID = '6670d8dcde7b4b99e1bd8c05';
@@ -402,7 +408,7 @@ function extract_info_news(data, search_word){
         console.log(i)
         i = i + 1
     });
-    console.log('Não há mais noticias')    
+    // console.log('Não há mais noticias')    
 }
 
 
@@ -425,40 +431,40 @@ const stopWords = [
     "you've", "your", "yours", "yourself", "yourselves", "x", "ha"
   ];
   
-  async function get_clean_concatenated_text_by_search_word(search_word) {
-    const News = mongoose.model('News', newsSchema);
-    try {
-      const documents = await News.find({ search_word: search_word });
-      if (documents.length > 0) {
-        // console.log('Documentos encontrados:', documents);
-  
-        // Concatena os campos title, content e description
-        let concatenatedText = documents.map(doc => 
-          `${doc.title} ${doc.content} ${doc.description}`
-        ).join(' ');
-  
-        // Limpa o texto deixando apenas palavras
-        concatenatedText = concatenatedText
-          .toLowerCase()  // Transforma em minúsculas
-          .replace(/[^a-z\s]/g, '')  // Remove caracteres especiais e números
-          .replace(/\s+/g, ' ')  // Remove espaços em excesso
-          .trim();  // Remove espaços no início e no fim
-  
-        // Remove as stop words
-        const words = concatenatedText.split(' ');
-        const filteredWords = words.filter(word => !stopWords.includes(word));
-        const cleanText = filteredWords.join(' ');
-  
-        return cleanText;
-      } else {
-        console.log('Nenhum documento encontrado.');
-        return '';
-      }
-    } catch (error) {
-      console.error('Erro ao encontrar os documentos:', error);
-      throw error;
+async function get_clean_concatenated_text_by_search_word(search_word) {
+  const News = mongoose.model('News', newsSchema);
+  try {
+    const documents = await News.find({ search_word: search_word });
+    if (documents.length > 0) {
+      // console.log('Documentos encontrados:', documents);
+
+      // Concatena os campos title, content e description
+      let concatenatedText = documents.map(doc => 
+        `${doc.title} ${doc.content} ${doc.description}`
+      ).join(' ');
+
+      // Limpa o texto deixando apenas palavras
+      concatenatedText = concatenatedText
+        .toLowerCase()  // Transforma em minúsculas
+        .replace(/[^a-z\s]/g, '')  // Remove caracteres especiais e números
+        .replace(/\s+/g, ' ')  // Remove espaços em excesso
+        .trim();  // Remove espaços no início e no fim
+
+      // Remove as stop words
+      const words = concatenatedText.split(' ');
+      const filteredWords = words.filter(word => !stopWords.includes(word));
+      const cleanText = filteredWords.join(' ');
+
+      return cleanText;
+    } else {
+      console.log('Nenhum documento encontrado.');
+      return '';
     }
+  } catch (error) {
+    console.error('Erro ao encontrar os documentos:', error);
+    throw error;
   }
+}
 
 
   // python, javascript, technology, mongodb, frontend, backend, web, development, woman, coke, ai
@@ -479,12 +485,19 @@ const stopWords = [
 
 // read_all_mongo()
 
+// readWord().then(result => {
+//   if (result) {
+//     console.log(typeof result);
+//   }
+// }).catch(error => {
+//   console.error('Erro:', error);
+// });
+
 
 
 
 module.exports = { 
-  read_all_mongo,
-  read_mongo, 
+  read_all_mongo, 
   get_clean_concatenated_text_by_search_word, 
   readWord,
   addWord,

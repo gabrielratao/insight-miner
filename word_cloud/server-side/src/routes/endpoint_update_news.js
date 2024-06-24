@@ -22,10 +22,10 @@ const router = express.Router();
 
 // const port = 3000; //porta padrão
 
-//teste
-router.get('/sabugo', (req, res) => {
-    res.send('API OK')
-})
+// //teste
+// router.get('/sabugo', (req, res) => {
+//     res.send('API OK')
+// })
 
 
 //acionar a atualização das noticias
