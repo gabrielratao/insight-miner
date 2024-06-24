@@ -45,13 +45,16 @@ const WordCloud = () => {
                 if (!response.ok) {
                     throw new Error('Não foi possível carregar os dados.');
                 }
-                return response.text();
+                return response.json();
             })
             .then(data => {
-                //console.log("dados recebidos:", data)
-                if (data) {
+                console.log("dados recebidos:", data)
+                if (data.result && data.result.trim()) {
                     //Formata os dados recebidos em um array
-                    const wordsArray = data.split(' ');
+                    const wordsArray = data.result.split(' ');
+                    if (wordsArray.length === 0 || (wordsArray.length === 1 && wordsArray[0] === '')) {
+                        throw new Error('Palavra chave não encontrada. Por favor, tente primeiro adiciona-la e atualizar os dados.');
+                    }
                     //Limita o numero de palavras na nuvem
                     const limitedWordsinCloud =  wordsArray.slice(10, MaxWords);
                     //Mapeia as palavras para popular a nuvem
@@ -62,7 +65,7 @@ const WordCloud = () => {
                     setValores(formattedValues); // Define os valores recebidos da API
                 } else {
                     setValores([]); // Limpa os valores exibidos
-                    alert('Nenhum resultado encontrado.');
+                    alert('Palavra chave não encontrada. Por favor, tente primeiro adiciona-la e atualizar os dados.');
                 }
             })
             .catch(error => {
@@ -80,6 +83,7 @@ const WordCloud = () => {
             <div className='searchbox'>
         
                 <input className='search-input'
+                id='search-input'
                 placeholder='ex javascript' 
                 value={chave}
                 onChange={handleInputChange} 

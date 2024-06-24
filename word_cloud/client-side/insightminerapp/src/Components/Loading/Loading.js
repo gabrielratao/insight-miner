@@ -1,5 +1,5 @@
-import './Loading.css'
-import eng from '../SVG/eng.svg'
+import './Loading.css';
+import eng from '../SVG/eng.svg';
 
 export default function Engload() {
     return(
