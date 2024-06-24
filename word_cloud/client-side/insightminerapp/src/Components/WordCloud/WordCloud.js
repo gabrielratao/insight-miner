@@ -2,6 +2,7 @@ import './WordCloud.css';
 import React, { useState } from 'react';
 import { TagCloud } from 'react-tagcloud';
 import Engload from '../Loading/Loading'
+import icon_search from '../SVG/icon_search.svg'
 
 //URL 
 const GETWordURL = 'http://localhost:5000/api/words/cloud/?search_word='
@@ -93,7 +94,7 @@ const WordCloud = () => {
                 <button 
                 className='btn-search'
                 onClick={handleSearchButtonClick}>
-                    Pesquisar
+                    <img src={icon_search}/>
                 </button>
             </div>
          
