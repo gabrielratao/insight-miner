@@ -5,3 +5,8 @@ back-end/IM_ENV/
 scrap_sm/
 .env
 .xlsx
+testes/
+*.pyc
+*/__pycache__/
+__pycache__/
+
